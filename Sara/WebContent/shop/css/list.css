@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+
+#wrapper{
+width: 500px;
+background:#A4A4A4;
+margin: auto; 
+}
+
+.btn2 {
+        border: none;
+        outline: none;
+        background: transparent;
+       
+    }
+
+    .btn2:hover {
+        border: 1px double #000;
+        background: transparent;
+        color: #000; 
+    }
+    
+    
+     .wishlist-button {
+        border: none;
+        outline: none;
+        background: transparent;
+    }
+
+    .wishlist-button img {
+        width: 10; /* 이미지 크기 조절 */
+        height: 10;
+    }
+    
+    
+     .cart-button {
+        border: none;
+        outline: none;
+        background: transparent;
+    }
+
+    .cart-button img {
+        width: 10; /* 이미지 크기 조절 */
+        height: 10;
+    }
+    
+     .swiper-container {
+            width: 100%; /* 전체 화면 너비로 설정 */
+            max-width: 700px; /* 최대 폭 설정 (선택사항) */
+            margin: 0 auto; /* 가운데 정렬 */
+            position: relative; /* 상대 위치 설정 */
+        }
+
+        /* 이미지 슬라이드의 스타일 조정 */
+        .swiper-slide img {
+            width: 100%; /* 슬라이드 너비에 맞게 이미지 크기 조정 */
+            height: auto;
+        }
+        
