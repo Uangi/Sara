@@ -97,6 +97,7 @@
 						type="text" name="tel3" style="width: 70px;"></td>
 </tr>
 
+<!-- 	우편번호 api  -->
 <input type="text" id="sample4_postcode" placeholder="우편번호">
 <input type="button" onclick="sample4_execDaumPostcode();" value="우편번호 찾기"><br>
 <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
