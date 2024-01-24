@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+
+
+#wrapper{
+width: 250px;
+background:#A4A4A4;
+margin: auto;
+
+}
+
+.table-subject{
+	
+	font-size:30px;
+	width: 250px;
+	text-align:center;
+	margin: auto; 
+	color: #FAFAFA;
+}
+
+
+.table-content{
+	
+	font-size:17px;
+	width: 250px;
+	margin: auto; 
+	color: #FAFAFA;
+	margin: auto;
+}
+
+.td{
+	font-size:15px;
+	width: 80px	
+}
+
+.btn{
+	
+	font-size:13px;
+	
+}
+

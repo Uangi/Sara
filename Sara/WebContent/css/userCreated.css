@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+
+#wrapper{
+width: 500px;
+background:#A4A4A4;
+margin: auto; 
+}
+
+
+
+.table-subject{
+	
+	font-size:30px;
+	width: 500px;
+	text-align:center;
+	margin: auto; 
+	color: #FAFAFA;
+}
+
+.table-pilsu{
+	
+	font-size:15px;
+	width: 500px;
+	text-align: right;
+	margin: auto;
+}
+
+
+.table-content{
+	
+	font-size:17px;
+	width: 500px;
+	margin: auto; 
+	color: #FAFAFA;
+}
+
+.addr{
+	
+	font-size: 14px;
+}
+
+.input1{
+	
+	height: 23px;
+	width:270px 
+	
+}
+
+.input2{
+	
+	height: 20px;
+	width:270px 
+	
+}
