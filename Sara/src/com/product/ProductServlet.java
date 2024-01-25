@@ -109,6 +109,7 @@ public class ProductServlet extends HttpServlet {
 			
 			// Top.do
 			
+			
 		} else if (uri.indexOf("Top.do") != -1) {
 			String pageNum = req.getParameter("pageNum");
 			
@@ -560,7 +561,27 @@ public class ProductServlet extends HttpServlet {
 				out.print("</script>");
 			}
 
+		} else if (uri.indexOf("shop.do") != -1) {
+			
+			
+			ProductDTO dto = new ProductDTO();
+			String listUrl = cp + "/product/shop.do?";	// 가상 주소
+
+
+//			String downloadPath = cp + "/product/download.do";
+
+			// 이미지 경로    
+			String imagePath = cp + "/ProductImage/saveFile";	// 파일 저장 경로
+			req.setAttribute("imagePath", imagePath);
+			
+//			req.setAttribute("downloadPath", downloadPath);
+			
+			url = "/shop.jsp";	// 이미지 파일 리스트의 실제 주소
+			forward(req, resp, url);
+				   
 		}
+		
+		
 
 	}
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       

@@ -1,180 +1,533 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
-
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회 원 가 입</title>
-<link rel="stylesheet" type="text/css" href="<%=cp%>/Function/css/userCreated.css" />
+<meta charset="UTF-8">
+<title> JOIN US </title>
 <script type="text/javascript" src="<%=cp%>/Function/js/addr.js"></script>	
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
+<script type="text/javascript">
+
+
+
+</script>
+<style>
+        body {
+            
+            background-color: #fff; 
+                                 
+            background-attachment: scroll; 
+           
+            margin: 0;
+            padding: 0;
+            
+            display: flex;
+            justify-content: center;
+           
+        }
+        
+        
+        
+        .btn2 {
+        border: none;
+        outline: none;
+        background: transparent;
+       
+    }
+
+    .btn2:hover {
+        border: 0.5px double #000;
+        background: transparent;
+        color: #000; 
+        
+    }
+    
+    button {
+    border: none;
+    outline: solid;
+    background: #fff;
+    color: #000;
+    outline-width: 1px ;
+}
+    
+    
+input[type="radio"] {
+	margin-bottom: 6px;
+}
+
+input[type="radio"]:checked {
+	border: 1px solid #000000;
+
+}
+
+label {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+label b {
+	position: relative;
+	top: 5px; 
+}
+
+input[type="radio"][name="r1"] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	outline: none;
+	background-color: #000; 
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+input[type="radio"][name="r1"]:checked {
+    background-color: transparent;
+    border-color: #000; 
+}
+
+input[type="radio"][name="r2"] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	outline: none;
+	background-color: #000; 
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+
+input[type="radio"][name="r2"]:checked {
+    background-color: transparent; 
+    border-color: #000;
+}
+
+
+label {
+	display: flex;
+	align-items: center;
+}  
+    
+
+        
+</style>
+
+
 </head>
 <body>
 
-<br/>
-<div id="wrapper">
-<table border="1" cellpadding="0" cellspacing="0" class="table-subject">
-<tr>
-	<td>회&nbsp;원&nbsp;가&nbsp;입</td>
-</tr>
-</table>
-</div>
-<br/>
+<div id = "tot" >
+<div id = "signUp" >
 
+<div id = "signUp2" style="margin-left: 205px;">
 
-<table class="table-pilsu">
-<tr>
-	<td><span style="color: red;">*</span>필수입력사항</td>
-</tr>
-</table>
-
-<form action=""  name="myForm" method = "post">
-<div id="wrapper">
-<table border="0" cellpadding="0" cellspacing="0"  class="table-content">
-<tr>
-	<td width="90">아이디<span style="color: red;">*</span></td>
-
-<c:if test="${not empty userId  }">
-<td><input type="text" name="userId" value="${userId }" class="input1" /> 
-</c:if>
-<c:if test="${empty userId  }">
-<td><input type="text" name="userId" class="input1" /> 
-</c:if>
-
-<input type="checkbox" name="userId2"  style="margin-left:15px;" onclick="idChecked();"
-<c:if test="${not empty userId}">checked</c:if> />
-<span style="font-size: 12px;">가입가능아이디</span></td>
-</tr>
-<c:if test="${not empty message  }">
-
-<tr style="margin: auto; height: 15px; ">
-	<td></td>
-	<td colspan="2"> <span style="font-size: 10px; color: blue ;margin-left: 80px; "><b>${message }</b></span></td>			
-</tr>
-</c:if>
-<tr>
-	<td>패스워드<span style="color: red;">*</span></td>
-	<td><input type="password" name="userPwd" class="input1" /></td>
-</tr>
-<tr>
-	<td style="font-size: 12px;">패스워드확인<span style="color: red; font-size: 15px;">*</span></td>
-	<td><input type="password" name="userPwd2" class="input1" /> 
-	<input  type="checkbox" name="userPwd3" style="margin-left: 20px;" onchange ="pwdCheckd();" /><span
-	style="font-size: 12px;">패스워드확인</span></td>
-</tr>
-<tr>
-	<td style="font-size: 15px;">이름<span style="color: red; font-size: 15px;">*</span></td>
-	<td><input type="text" name="userName" class="input1" /></td>
-</tr>
-<tr>
-	<td style="font-size: 15px;">주소</td>
-	<td><input type="text" name="postal" style="width: 70px; height: 23px;">&nbsp;<span
-	class="addr"> 우편번호 </span><br /> <span class="addr">기본주소</span><br />
-	<input type="text" name="addr1" class="input2" /><br /> 
-	<span class="addr">상세주소</span><br /> <input type="text" name="addr2"
-	class="input2" /></td>
-</tr>
-
-
-<tr>
-	<td width="90">일반전화</td>
-	<td><select name="tel1">
-		<option value="02">02</option>
-		<option value="031">031</option>
-		<option value="032">032</option>
-		<option value="051">051</option>
-		<option value="043">043</option>
-		<option value="041">041</option>
-		</select> - <input type="text" name="tel2" style="width: 70px;"> - <input
-						type="text" name="tel3" style="width: 70px;"></td>
-</tr>
-
-<!-- 	우편번호 api  -->
-<input type="text" id="sample4_postcode" placeholder="우편번호">
-<input type="button" onclick="sample4_execDaumPostcode();" value="우편번호 찾기"><br>
-<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
-<span id="guide" style="color:#999;display:none"></span>
-<input type="text" id="sample4_detailAddress" placeholder="상세주소">
-<input type="text" id="sample4_extraAddress" placeholder="참고항목">
-
-
-<tr>
-	<td width="90">휴대전화<span style="color: red; font-size: 15px;">*</span></td>
-	<td><select name="xx">
-		<option value="010" selected="selected">통신사 선택</option>
-		<option value="KT">KT</option>
-		<option value="LG">LG</option>
-		<option value="SK">SK</option>
-		</select> 
-		<select name="mobile1">
-		<option value="010" selected="selected">010</option>
-		</select> - <input type="text" name="mobile2" style="width: 70px;"> - 
-		<input 	type="text" name="mobile3" style="width: 70px;"></td>
-</tr>
-<tr>
-	<td width="90">EMAIL<span style="color: red; font-size: 15px;">*</span></td>
-	<td><input type="text" name="email1" class="input1" /></td>
-</tr>
-</table>
+<div id = "tit">
+<a href="<%=cp %>/main.jsp">
+<img src="http://192.168.16.5:8080/Sara/imageSara/사라찐누끼.png" width="200px;" ></a><br/><br/>
 </div>
 
+<div id = "join1">
 
-		<table class="table-pilsu">
-			<tr>
-				<td>추가입력사항</td>
-			</tr>
-		</table>
+<table>
+<tr>
+	<td colspan="2" width="535" style ="text-align: right; padding-bottom: 5px; 
+	color: #000; font-size: 14px; overflow: hidden; border: none; outline: none;">*필수입력사항
+	<br/>
+	</td>
+	</tr>
+</table>
 
-		<div id="wrapper">
-			<table border="1" cellpadding="0" cellspacing="0"
-				class="table-content">
-				<tr>
-					<td width="90">성별</td>
-					<td><input type="radio" name="gender" value="남자" />남자 <input
-						type="radio" name="gender" value="여자" />여자</td>
-				</tr>
-				<tr>
-					<td width="90">생년월일</td>
-					<td><input type="text" name="birth" class="input1" /></td>
-				</tr>
-				<tr>
-					<td width="90">가입경로</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td width="90">환불계좌<span style="color: red; font-size: 15px;">*</span></td>
-					<td><select name="bank">
-							<option value="010" selected="selected">은행 선택</option>
-							<option value="하나은행">하나은행</option>
-							<option value="국민은행">국민은행</option>
-							<option value="카카오뱅크">카카오뱅크</option>
-							<option value="우리은행">우리은행</option>
-							<option value="농협">농협</option>
-					</select> <input type="text" name="act"></td>
-				</tr>
-			</table>
-		</div>
-		<br />
-		<table    style="width: 250px; margin: auto;">
-			<tr align="center">
-				<td><input type="button" value="회원가입" onclick="sendIt();" >&nbsp; <input
-					type="reset" value="다시작성">&nbsp; <input type="button"
-					value="로그인화면" onclick="location='<%=cp%>/project/login.do'"></td>
-			</tr>
-		</table>
-</form>
+
+<table bordercolor="#000" border="1" cellpadding="0" cellspacing="0"
+			style="color: #000; font-size: 13px; overflow: hidden;">
+
+<tr>
+	
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+        <b>I D :</b>
+        <input type="text" id="id" placeholder=" 영문/숫자 만 입력 가능 "
+        style="border: none; outline: none; background: #fff; color: #000;" size="20px">
+        &nbsp;
+        <button type="button" onclick="checkDuplicate()" 
+        style=" outline-width: 1px ; background: #fff; color: #000;">아이디 확인</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="inj" value="실명 인증가입" onclick="sendIt();" style="color: #000;"/>
+        &nbsp;실명인증가입 
+    </td>
+</tr>
+
+
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+        <b>P W :</b>
+        <input type="password" name="pwd" placeholder=" 4자리 이상 입력 가능" style="border: none; outline: none; background: #fff; color: #000;" size="20px">
+        <button type="button" onclick="checkDuplicate()" style="
+            outline-width: 1px ; background: #fff; color: #000;">패스워드 확인</button>
+            
+    </td>
+</tr>
+
+
+
+
+
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+        <b>P W :</b>
+        <input type="password" name="pwd2" placeholder=" 패스워드 일치 여부 확인"
+        style="border: none; outline: none; background: #fff; color: #000;" size="20px">
+		<button type="button" onclick="checkDuplicate()" style="
+            outline-width: 1px ; background: #fff; color: #000;">확인</button>&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="inj2" value=" 패스워드확인완료" onclick="sendIt();" style="color: #000;"/>
+        패스워드 확인 완료 
+    </td>
+</tr>
+
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+        <b>N A M E :</b>
+        <input type="text" name="name" style="border: none; outline: none; background: #fff; color: #000;">
+    </td>
+</tr>
+
+
+<!-- <tr> -->
+<!--     <td style="margin: auto;"></td> -->
+<!--     <td style="border-left: none; padding-left: 40px;" width="500" height="50"> -->
+
+<div>
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+        <b>A D D R E S S :</b>
+        <input type="text" id="sample4_postcode" name ="sample4_postcode"  placeholder= " 우편번호" style="border: none; outline: none; background: #fff; color: #000;">
+        
+        <input type="button" onclick="sample4_execDaumPostcode();"  style="
+            outline-width: 1px ;  background: #fff; color: #000;" value = "우편번호 검색"/>
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+    	<b>A D D 1 :</b>           
+        <input type="text" id="sample4_roadAddress"  name ="sample4_roadAddress" placeholder="도로명주소" style="border: none; outline: none; background: #fff; color: #000;">
+        <input type="text" id="sample4_jibunAddress"  name ="sample4_jibunAddress" placeholder="지번주소" style="border: none; outline: none; background: #fff; color: #000;">
+        <span id="guide" style="color:#999;display:none"></span>
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">   
+    	<b>A D D 2 :</b>     
+        <input type="text" id="sample4_detailAddress"  name ="sample4_detailAddress" placeholder=" 상세주소" style="border: none; outline: none; background: #fff; color: #000;">
+        <input type="text" id="sample4_extraAddress"  name ="sample4_extraAddress" placeholder=" 참고항목" style="border: none; outline: none; background: #fff; color: #000;">
+    </td>
+</tr>
+<td style="margin: auto;"></td>
+    <td style=" border-left: none; padding-left: 40px;" width="500" height="50" >
+        <b>T E L :</b>&nbsp;&nbsp;&nbsp;
+        <select style="border: none; outline: none; background: #fff; color: #000; padding-left: 3px;" >
+						<option selected="selected"></option>
+						<option>02</option>
+						<option>031</option>
+						<option>032</option>
+						<option>033</option>
+						<option>041</option>
+						<option>042</option>
+						<option>043</option>
+						<option>051</option>
+						<option>052</option>
+						<option>053</option>
+						<option>054</option>
+						<option>055</option>
+						<option>061</option>
+						<option>062</option>
+						<option>063</option>
+						<option>064</option>
+				</select>
+			&nbsp;&nbsp;
+        <input type="text" name="tel1" onkeypress="onlyNum();" size="4" placeholder="****"
+        style="border: none; outline: none; background: #fff; color: #000; text-align: center; ">
+        &nbsp;-&nbsp;
+        <input type="text" name="tel2" onkeypress="onlyNum();" size="4" placeholder="****"
+        style="border: none; outline: none; background: #fff; color: #000; text-align: center;" >
+    </td>
+</tr>
+
+
+<tr>
+<td style="margin: auto;"></td>
+    <td style=" border-left: none; padding-left: 40px;" width="500" height="50" >
+        <b>P H O N E :</b>&nbsp;&nbsp;
+        <select style="border: none; outline: none; background: #fff; color: #000; padding-left: 3px;">
+						<option selected="selected"></option>
+						<option>SKT</option>
+						<option>SKT 알뜰폰</option>
+						<option>LGU+</option>
+						<option>LGU+ 알뜰폰</option>
+						<option>KT</option>
+						<option>KT 알뜰폰</option>
+		</select>	
+					
+		<select style="border: none; outline: none; background: #fff; color: #000; padding-left: 6px;">
+						<option selected="selected"></option>
+						<option>010</option>
+						<option>011</option>
+						<option>012</option>
+						<option>013</option>
+						<option>014</option>
+						<option>001</option>
+						<option>002</option>
+						<option>007</option>
+		</select>
+			&nbsp;-&nbsp;
+        <input type="text" name="phn1" onkeypress="onlyNum();" size="4" placeholder="****"
+        style="border: none; outline: none; background: #fff; color: #000; text-align: center;">
+        &nbsp;-&nbsp;
+        <input type="text" name="phn2" onkeypress="onlyNum();" size="4" placeholder="****"
+        style="border: none; outline: none; background: #fff; color: #000; text-align: center;" >
+    </td>
+</tr>
+
+
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+        <b>E M A I L :</b>
+        <input type="text" name="email" placeholder=" ex) Examplefff@example.com" size="30" style="border: none; outline: none; background: #fff; color: #000;">
+        
+        <button type="button" onclick="checkDuplicate()" style="
+            outline-width: 1px ; background: #fff; color: #000;">이메일 중복확인</button>
+    </td>
+</tr>
+
+
+</table>
+
+
+</div>
+
+<div id = join2>
+
+
+<table>
+
+<tr>
+	<td colspan="2" width="535" style ="text-align: right; padding-bottom: 5px; padding-top: 20px; 
+	color: #000; font-size: 14px; overflow: hidden; border: none; outline: none;">*추가입력정보
+	<br/></td>
+</tr>
+
+</table>
+
+
+<table bordercolor="#000" border="1" cellpadding="0" cellspacing="0"
+			style="color: #000; font-size: 13px; overflow: hidden;">
+
+
+<tr>
+	
+    <td style="margin: auto;"></td>
+    <td colspan="2" align="center" style="border-left: none; " width="540" height="50">
+	
+	<input type="radio" name="r1" checked="checked"><b>남자&nbsp;&nbsp;&nbsp;&nbsp;</b>
+	<input type="radio" name="r1"> <b>여자
+			&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;</b> 
+	<input type="radio" name="r2" checked="checked"><b>내국인&nbsp;&nbsp;&nbsp;&nbsp;</b>
+	<input type="radio" name="r2"> <b>외국인</b>
+	
+	</td>
+</tr>	
+
+
+<tr>
+    <td style="margin: auto;"></td>
+    <td style="border-left: none; padding-left: 40px;" width="500" height="50">
+        <b>B I R T H :</b>
+        <input type="text" name="bir" placeholder=" ex) 2024-01-01"style="border: none; outline: none; background: #fff; color: #000;">
+    </td>
+</tr>
+
+
+<tr>
+<td style="margin: auto;"></td>
+    <td style=" border-left: none; padding-left: 40px;" width="500" height="50" >
+        <b>B A N K :</b>&nbsp;&nbsp;
+        <select style="border: none; outline: none; background: #fff; color: #000;">
+						<option selected="selected"></option>
+						<option>우리</option>
+						<option>국민</option>
+						<option>하나</option>
+						<option>토스</option>
+						<option>카카오</option>
+						<option>농협</option>
+						<option>신한</option>
+						<option>제주</option>
+						<option>새마을</option>
+						
+				</select>
+			&nbsp;&nbsp;
+        <input type="text" name="tel1" onkeypress="onlyNum();" size="30" 
+        style="border: none; outline: none; background: #fff; color: #000; text-align: center;">
+      
+      	<button type="button" onclick="checkDuplicate()" style="
+            outline-width: 1px ; background: #fff; color: #000;">계좌 확인</button>
+      
+      
+     </td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div id = "butt">
+
+<table>
+<tr>
+<td style="margin: auto;"></td>
+    <td style=" border-left: none; padding-left: 22px; padding-top: 10px; " width="500" height="50" align="center">
+
+<input type="button" class="btn" value=" J O I N " onclick="sendIt();" style="background: #fff; color: #000;"/> &nbsp;
+<input type="reset" value=" R E S E T " onclick="document.myForm.id.focus();"  style="background: #fff; color: #000;"/> &nbsp;
+<input type="button" class="btn" value=" C A N C L E"  style="background: #fff; color: #000;" onclick="javascript:location.href='<%=cp%>/batttmnn/jsp/list.jsp';" />
+
+  
+     </td>
+</tr>
+
+</table>
+</div>
+
+
+<div id = "butt">
+
+
+
+<table>
+
+<tr>
+	<td style="margin: auto;"></td>
+	<td style=" border-left: none; padding-left: 22px; padding-top: 10px; " width="500" height="50" align="center">
+		<br/>
+		<br/>
+		<button type="button" class="btn" onclick="sendIt();" style="border: none; outline: none;"> L O G I N &nbsp; ? </button>
+		<br/>
+		<br/>
+		<button type="button" class="btn" onclick="sendIt();" style="border: none; outline: none;"> F O R G O T &nbsp; &nbsp;P W &nbsp;? </button>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+
+     </td>
+</tr>
+
+</table>
+</div>
+</div>
+
+
+
+
+<div id="ha" style="display: flex; justify-content: space-between; align-items: center;">
+
+<div id="mit1" style=" padding-bottom: 200px; padding-right:200px; color: #000" >
+
+<input type="button" value="&nbsp; T O P &nbsp;" class="btn2"
+			onclick="location='<%=cp%>/product/Top.do';" 
+			 align="middle"  style="font-size: 18px;"/><br/>	
+
+<input type="button" value="&nbsp; B O T T O M S &nbsp;" class="btn2"
+			onclick="location='<%=cp%>/sara/bottoms.jsp';" 
+			 align="middle" style="font-size: 18px;"/><br/>
+		
+<input type="button" value="&nbsp; B A G S &nbsp;" class="btn2"
+			onclick="location='<%=cp%>/sara/bags.jsp';" 
+			 align="middle" style="font-size: 18px;"/><br/>
+	
+<input type="button" value="&nbsp; S H O E S &nbsp;" class="btn2"
+			onclick="location='<%=cp%>/sara/shoes.jsp';" 
+			 align="middle" style="font-size: 18px;"/><br/>
+		
+<input type="button" value="&nbsp; A C C .&nbsp;" class="btn2"
+			onclick="location='<%=cp%>/sara/acc.jsp';" 
+			 align="middle" style="font-size: 18px;"/><br/>
+			 
+<input type="button" value="&nbsp; M Y&nbsp;&nbsp; P A G E&nbsp;"  class="btn2"
+			onclick="location='<%=cp%>/sara/acc.jsp';" 
+			 align="middle" style="font-size: 18px;"/><br/>
+			 
+<input type="button" value="&nbsp; H O M E &nbsp;" class="btn2"
+			onclick="location='<%=cp%>/sara/acc.jsp';" 
+			 align="middle" style="font-size: 18px;"/><br/>
+			 
+<input type="button" value="&nbsp; A B O U T&nbsp;&nbsp; U S &nbsp;" class="btn2"
+			onclick="location='<%=cp%>/sara/acc.jsp';" 
+			 align="middle" style="font-size: 18px;"/><br/>
+			 
+			 
+			 <br/><br/><br/>
+			 
+			 
+			 
+<a href="<%=cp %>/main.jsp">
+<img src="http://192.168.16.11:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
+			 
+			 
+			 <br/>
+			 
+ 
+<input type="button" 
+	value="&nbsp;&nbsp;4 t h &nbsp;&nbsp;F L O O R &nbsp;,&nbsp; 1 2 4 &nbsp;,&nbsp;
+&nbsp;&nbsp;T E H E R A N &nbsp;-&nbsp; R O &nbsp;,&nbsp; G A N G N A M &nbsp;-&nbsp; G U &nbsp;,&nbsp;
+&nbsp;&nbsp;S E O U L &nbsp;,&nbsp; R E P U B L I C &nbsp;&nbsp;O F&nbsp;&nbsp; K O R E A" class="btn2"
+			onclick="location='<%=cp%>/outer.jsp';" 
+			 align="middle" style="text-align: left; color: #000"/><br/>
+
+ 
+ </div>
+ 
+ 
+ <div id="mit2" style="padding-left: 200px; color: #000" align="right">
+ 
+ <b>©️ copyright 2024. SARA. All Rights Reserved.</b>
+ 
+ </div>
+ 
+</div>
+
+ </div>
+
+
+</div>
+</div>
+
 </body>
 </html>
-
-
-
-
