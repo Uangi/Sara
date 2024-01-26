@@ -14,17 +14,16 @@ public class SignUpDTO {
 	private String mobile3;
 
 	private String sample4_postcode;
-	private String sample4_roadAddrss;
+	private String sample4_roadAddress;
 	private String sample4_jibunAddress;
 	private String sample4_detailAddress;
 	private String sample4_extraAddress;
 
-	private String email1;
+	private String email;
 	private String gender;
 	private String birth;
 	private String bank;
 	private String act;
-	private String bankName;
 
 	public String getUserId() {
 		return userId;
@@ -107,12 +106,12 @@ public class SignUpDTO {
 		this.sample4_postcode = sample4_postcode;
 	}
 
-	public String getSample4_roadAddrss() {
-		return sample4_roadAddrss;
+	public String getSample4_roadAddress() {
+		return sample4_roadAddress;
 	}
 
-	public void setSample4_roadAddrss(String sample4_roadAddrss) {
-		this.sample4_roadAddrss = sample4_roadAddrss;
+	public void setSample4_roadAddress(String sample4_roadAddress) {
+		this.sample4_roadAddress = sample4_roadAddress;
 	}
 
 	public String getSample4_jibunAddress() {
@@ -139,12 +138,12 @@ public class SignUpDTO {
 		this.sample4_extraAddress = sample4_extraAddress;
 	}
 
-	public String getEmail1() {
-		return email1;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmail1(String email1) {
-		this.email1 = email1;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getGender() {
@@ -179,12 +178,5 @@ public class SignUpDTO {
 		this.act = act;
 	}
 
-	public String getBankName() {
-		return bankName;
-	}
-
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
 
 }

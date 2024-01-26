@@ -51,7 +51,7 @@ public class SignUpServlet extends HttpServlet {
 			url="/Function/userCreated.jsp";
 			forward(req, resp, url);
 			
-		}else if(uri.indexOf("userCreated_ok.do")!=-1){
+		}else if(uri.indexOf("userCreated.do")!=-1){
 		
 			SignUpDTO dto = new SignUpDTO();
 
@@ -64,19 +64,19 @@ public class SignUpServlet extends HttpServlet {
 			dto.setTel3(req.getParameter("tel3"));
 			dto.setMobile1(req.getParameter("mobile1"));
 			dto.setMobile2(req.getParameter("mobile2"));
-			dto.setMobile3(req.getParameter("mobi le3"));
+			dto.setMobile3(req.getParameter("mobile3"));
 			
 			dto.setSample4_postcode(req.getParameter("sample4_postcode"));
-			dto.setSample4_roadAddrss(req.getParameter("sample4_roadAddrss"));
+			dto.setSample4_roadAddress(req.getParameter("sample4_roadAddress"));
 			dto.setSample4_jibunAddress(req.getParameter("sample4_jibunAddress"));
 			dto.setSample4_detailAddress(req.getParameter("sample4_detailAddress"));
 			dto.setSample4_extraAddress(req.getParameter("sample4_extraAddress"));
 			
+			dto.setEmail(req.getParameter("email"));
 			dto.setGender(req.getParameter("gender"));
 			dto.setBirth(req.getParameter("birth"));
 			dto.setBank(req.getParameter("bank"));
 			dto.setAct(req.getParameter("act"));
-			dto.setBankName(req.getParameter("bankName"));
 			
 			dao.insertData(dto);
 
@@ -163,10 +163,10 @@ public class SignUpServlet extends HttpServlet {
 	}else if(uri.indexOf("logout.do")!=-1) {
 		
 		HttpSession session = req.getSession();
-		session.removeAttribute("customInfo");
+		session.removeAttribute("loggedInUser");
 		session.invalidate();
 		
-		url = cp;
+		url = cp+ "/product/shop.do";
 		resp.sendRedirect(url);	
 			
 		
@@ -180,7 +180,21 @@ public class SignUpServlet extends HttpServlet {
 
 		forward(req, resp, url);
 		
+		// 삭제
+	} else if (uri.indexOf("userWithDrawal.do") != -1) {
+		String userId = req.getParameter("userId");
+
+		dao.deleteData(userId);
+
+		HttpSession session = req.getSession();	// 회원탈퇴 후 세션 삭제
+		session.removeAttribute("loggedInUser");
+		session.invalidate();
+		
+		url = cp + "/product/shop.do";
+		resp.sendRedirect(url);
+
 	}
+		
 }
 	
 	private boolean containsSpecialCharacter(String userId) {
