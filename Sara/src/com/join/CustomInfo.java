@@ -1,7 +1,7 @@
 package com.join;
 
 public class CustomInfo {
-	
+
 	private String userId;
 	private String userName;
 	
@@ -18,6 +18,4 @@ public class CustomInfo {
 		this.userName = userName;
 	}
 	
-	
-
 }

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-<display-name>studyEE</display-name>
+<display-name>Sara</display-name>
 <welcome-file-list>
 <welcome-file>index.html</welcome-file>
 <welcome-file>index.htm</welcome-file>
@@ -8,6 +9,7 @@
 <welcome-file>default.htm</welcome-file>
 <welcome-file>default.jsp</welcome-file>
 </welcome-file-list>
+
 <!-- 서블릿 이미지 업로드 셋팅  -->
 <servlet>
 <servlet-name>ProductServlet</servlet-name>
@@ -17,6 +19,7 @@
 <servlet-name>ProductServlet</servlet-name>
 <url-pattern>/product/*</url-pattern>
 </servlet-mapping>
+
 <!--   회원가입 및 로그인   -->
 <servlet>
 <servlet-name>SignUpServlet</servlet-name>
@@ -26,4 +29,5 @@
 <servlet-name>SignUpServlet</servlet-name>
 <url-pattern>/project/*</url-pattern>
 </servlet-mapping>
+
 </web-app>
