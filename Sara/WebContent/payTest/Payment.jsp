@@ -44,7 +44,7 @@ function iamport(){
     //가맹점 식별코드
     IMP.init("imp01368228");
     IMP.request_pay({
-        pg : 'kcp',
+        pg : 'inicis',
         pay_method : 'card',
         merchant_uid : 'merchant_' + new Date().getTime(),
         name : productName,

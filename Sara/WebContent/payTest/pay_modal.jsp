@@ -16,37 +16,43 @@
     
     
     <script>
-        var IMP = window.IMP; 
-        IMP.init("imp01368228"); // 가맹점 식별코드
-      
-        var today = new Date();   
-        var hours = today.getHours(); // 시
-        var minutes = today.getMinutes();  // 분
-        var seconds = today.getSeconds();  // 초
-        var milliseconds = today.getMilliseconds();
-        var makeMerchantUid = hours +  minutes + seconds + milliseconds;
-        
-
-        function requestPay() {
-            IMP.request_pay({
-                pg : 'kcp', // PG사 코드표에서 선택
-                pay_method : 'card', // 결제 방식
-                merchant_uid: "IMP"+makeMerchantUid, // 결제 고유 번호
-                name : '당근 10kg', // 제품명
-                amount : 1054, // 가격
-                buyer_email : 'Iamport@chai.finance',
-                buyer_name : '아임포트 기술지원팀',
-                buyer_tel : '010-1234-5678',
-                buyer_addr : '서울특별시 강남구 삼성동',
-                buyer_postcode : '123-456'
-            }, function (rsp) { // callback
-                if (rsp.success) {
-                    console.log(rsp);
-                } else {
-                    console.log(rsp);
-                }
-            });
-        }
+    $(".btn_payment").click(function() {
+    	  //class가 btn_payment인 태그를 선택했을 때 작동한다.
+    		
+    	  	IMP.init("imp01368228");	
+    	  	//결제시 전달되는 정보
+    		IMP.request_pay({
+    				    pg : 'inicis', 
+    				    pay_method : 'card',
+    				    merchant_uid : 'merchant_' + new Date().getTime(),
+    				    name : '구찌가방',
+    				    amount : 1234,
+    				    buyer_email : 'jyp423@siot.do',
+    				    buyer_name : '박진영',
+    				    buyer_tel : '010-1234-5678',
+    				    buyer_addr : '서울특별시 강남구 삼성동',
+    				    buyer_postcode : '123-456'
+    				}, function(rsp) {
+    					var result = '';
+    				    if ( rsp.success ) {
+    				        var msg = '결제가 완료되었습니다.';
+    				        msg += '고유ID : ' + rsp.imp_uid;
+    				        msg += '상점 거래ID : ' + rsp.merchant_uid;
+    				        msg += '결제 금액 : ' + rsp.paid_amount;
+    				        msg += '카드 승인번호 : ' + rsp.apply_num;
+    				        result ='0';
+    				    } else {
+    				        var msg = '결제에 실패하였습니다.';
+    				        msg += '에러내용 : ' + rsp.error_msg;
+    				        result ='1';
+    				    }
+    				    if(result=='0') {
+    				    	location.href= $.getContextPath()+"/Cart/Success";
+    				    }
+    				    alert(msg);
+    				});
+    			}
+    
     </script>
     <meta charset="UTF-8">
     <title>Sample Payment</title>
