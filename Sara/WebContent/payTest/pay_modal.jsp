@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="/resources/css/common/pay_modal.css">
 </head>
@@ -13,6 +13,8 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    
+    
     <script>
         var IMP = window.IMP; 
         IMP.init("imp01368228"); // 가맹점 식별코드
@@ -31,7 +33,7 @@
                 pay_method : 'card', // 결제 방식
                 merchant_uid: "IMP"+makeMerchantUid, // 결제 고유 번호
                 name : '당근 10kg', // 제품명
-                amount : 6600, // 가격
+                amount : 1054, // 가격
                 buyer_email : 'Iamport@chai.finance',
                 buyer_name : '아임포트 기술지원팀',
                 buyer_tel : '010-1234-5678',
