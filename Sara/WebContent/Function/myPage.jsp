@@ -34,16 +34,16 @@
 
 	<script type="text/javascript">
 	
-	document.addEventListener("DOMContentLoaded", function() {
-        var userPwdElement = document.getElementById("userPwd");
-        var originalUserPwd = userNameElement.innerHTML; // 원래 사용자 이름 저장
+// 	document.addEventListener("DOMContentLoaded", function() {
+//         var userPwdElement = document.getElementById("userPwd");
+//         var originalUserPwd = userNameElement.innerHTML; // 원래 사용자 이름 저장
 
-        // 사용자 이름 길이만큼 '*'로 대체
-        var hiddenUserName = "*".repeat(originalUserName.length);
-        userNameElement.innerHTML = hiddenUserPwd;
+//         // 사용자 이름 길이만큼 '*'로 대체
+//         var hiddenUserName = "*".repeat(originalUserName.length);
+//         userNameElement.innerHTML = hiddenUserPwd;
         
         
-	function confirmDelete() {
+	function confirmDelete(deleteUrl) {
 	    var isDelete = confirm("정말 탈퇴하시겠습니까? 탈퇴 후 회원님에 대한 모든 정보는 삭제됩니다.");
 	
 	    if (isDelete) {
@@ -218,7 +218,10 @@ align = "center" bgcolor = "#e4e4e4">
 	onclick = "location='<%=cp%>/Function/userUpdate.jsp';" >
 
 	<input type = "button" class ="btn" value = " 회원탈퇴 " 
-	onclick = "return confirmDelete('<%=cp%>Function/userWithDrawal.jsp?userId=${dto.userId }')">
+	onclick = "return confirmDelete('<%=cp%>/project/userWithDrawal.do?userId=<%=loggedInUser.getUserId()%>')">
+	
+<!-- <input type = "button" class ="btn" value = " 회원탈퇴 "  -->
+<%-- 	onclick = "return confirmDelete('<%=cp%>/user/userWithDrawal.do?userId=<%=loggedInUser.getUserId()%>')"> --%>
 	</td>
 </tr>
 

@@ -269,7 +269,7 @@ public class SignUpDAO {
 			
 			try {
 				
-				sql  = "delete signup where userId= ?";
+				sql  = "delete from signup where userId= ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setNString(1, userId);
