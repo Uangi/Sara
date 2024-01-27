@@ -40,7 +40,6 @@ function isValidDate(year, month, day) {
      return true;
 }
 
-
 	function idCheck() {
 
 		var f = document.myForm;
@@ -84,7 +83,6 @@ function isValidDate(year, month, day) {
 	            return;
 	        }
 	        
-	        
 	        var onlyNumbers = /^[0-9]+$/;
 	        if (onlyNumbers.test(f.userId.value)) {
 	            alert("숫자로만 구성되어 있습니다. 다른 문자도 포함시켜주세요.");
@@ -92,10 +90,6 @@ function isValidDate(year, month, day) {
 	            f.userId.focus();
 	            return;
 	        }
-
-			
-			
-			
 	        alert("사용가능한 아이디입니다.");
 			
 		}
@@ -104,7 +98,6 @@ function isValidDate(year, month, day) {
 	function sendIt() {
 
 		var f = document.myForm;
-		
 		
 			if(!f.userId2.checked){
 		
@@ -131,9 +124,9 @@ function isValidDate(year, month, day) {
 			return;							
 			}
 			
-			if(!f.email1.value ){
+			if(!f.email.value){
 			alert("이메일을 입력해주세요");
-			f.email1.focus();
+			f.email.focus();
 			return;							
 			}
 		
@@ -143,14 +136,12 @@ function isValidDate(year, month, day) {
 			return;							
 			}
 			
-		
-			f.action="/study/project/userCreated_ok.do";
+			f.action= "<%=cp%>/project/userCreated_ok.jsp";
     		f.submit();
 	
 	}
 		
-	
-	function pwdCheckd(){
+	function pwdChecked(){
 		
 		var f = document.myForm;
 		
@@ -171,39 +162,27 @@ function isValidDate(year, month, day) {
 			f.userPwd3.checked = false;
 			return;			
 		}
-	
-	
 		alert("패스워드 이상 없어요!!");
 	
 	}
-	
-	
-	
-	
-	
 	
 	function login(){
 		
 		var f = document.myForm;
 		
 			if(!f.userId.value){
-		
  			alert("아이디를 입력해주세요");
 			f.userId.focus();
 			return;
-
 			}
 			
-		
 			if(!f.userPwd.value){
-		
  			alert("비밀번호를 입력해주세요");
 			f.userPwd.focus();
 			return;
-
 			}
 			
-			f.action="/study/project/login_ok.do";
+			f.action="<%=cp%>/project/login_ok.do";
     		f.submit();
 			
 	}
@@ -212,7 +191,7 @@ function isValidDate(year, month, day) {
 		
 		var f = document.myForm;
 			
-			f.action="/study/project/idcheked_ok.do";
+			f.action="<%=cp%>/project/idcheked_ok.do";
     		f.submit();		
 	}
 	
