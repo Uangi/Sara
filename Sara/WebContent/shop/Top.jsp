@@ -1,8 +1,10 @@
+<%@page import="com.product.ProductDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +21,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <style>
 	
 	.swiper-slide-prev {
@@ -73,10 +77,61 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<button onclick="requestPay()">결제하기</button>
+<script type="text/javascript">
+	IMP.init("imp번호");	
+	let tname = '${tname}';
+	
+	function requestPay() {
+	console.log('함수 시작 출력 '); 
+	
+	//결제시 전달되는 정보
+	IMP.request_pay({
+		    pg : 'html5_inicis', 
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : tname,
+		    amount : 100,
+		    buyer_tel : '010-1234-5678',
+// 		    @@@@@@@@@@@@@@@@@
+		}, function(rsp) {
+			var result = '';
+			
+			// 결제 응답 처리 함수 체크
+			console.log(rsp);
+			
+			// 결제 성공
+		    if ( rsp.success ) {
+				console.log("결제 성공");
+				
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		        result ='0';
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		        result ='1';
+		    }
+		});
+console.log('함수 맨 끝 출력'); 
+	}
+	
+</script>
 
 </head>
 <body>
-
+<!-- <button onclick="requestPay()">결제하기</button> -->
+<!-- <input type = "button" onclick="requestPay();" value = "인풋결제"> -->
+<!-- <button type = "button" onclick="requestPay();"> 버튼타입 결2제</button> -->
+<!-- <button onclick="requestPay();">버튼온클릭결제</button> -->
+<!-- console.log('결제 시작');  -->
+<!-- <div class="requestPay" id="requestPay" onclick="requestPay();"> -->
+<!-- 							<button onclick="requestPay();">버튼온클릭결22제</button> -->
+<!-- 						</div> -->
+						
 <div id="temp" style="padding: 100px;" >
 
 <div id  style="margin-left: 1300px; ">
@@ -98,21 +153,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div style="display: flex; justify-content: space-between; align-items:top: ;">
 
-
-
-
-
 <a href="<%=cp %>/main.jsp">
 <img src="http://192.168.16.5:8080/Sara/imageSara/사라찐누끼.png" width="300" align="right" style="padding-left: 50px;"></a><br/>
 
-
-
-
 <div id="cate" style=" padding-right: 80px; padding-top: 80px;">
-
-
-
-
 
 <input type="button" value="&nbsp; O U T E R &nbsp;" class="btn2"
 			onclick="location='<%=cp%>/product/Outer.do;" 
@@ -137,11 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <input type="button" value="&nbsp; A C C .&nbsp;" class="btn2"
 			onclick="location='<%=cp%>/product/Accessories.do';" 
 			 align="middle"/>
-
-
 </div>
-
-
 
 <div id="ser" style=" padding-right: 80px; padding-top: 50px;" >
 <form action="" name="searchForm" method="post">
@@ -164,15 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-
-
-
-
-
-
 <div>
-
-
 
 
 <table width="900" border="1" cellpadding="3" cellspacing="3"
@@ -253,10 +285,6 @@ bordercolor="#000" style="margin: auto;">
 	
 </c:forEach>
 
-
-
-
-
 <tr>
 	<td colspan = "4" align = "center">
 	
@@ -315,26 +343,19 @@ justify-content: space-between; align-items: center;">
 			onclick="location='<%=cp%>/sara/acc.jsp';" 
 			 align="middle" style="font-size: 18px;"/><br/>
 			 
-			 
 			 <br/><br/><br/>
-			 
-			 
 			 
 <a href="<%=cp %>/main.jsp">
 <img src="http://192.168.16.11:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
 			 
-			 
 			 <br/>
 			 
- 
 <input type="button" 
 	value="&nbsp;&nbsp;4 t h &nbsp;&nbsp;F L O O R &nbsp;,&nbsp; 1 2 4 &nbsp;,&nbsp;
 &nbsp;&nbsp;T E H E R A N &nbsp;-&nbsp; R O &nbsp;,&nbsp; G A N G N A M &nbsp;-&nbsp; G U &nbsp;,&nbsp;
 &nbsp;&nbsp;S E O U L &nbsp;,&nbsp; R E P U B L I C &nbsp;&nbsp;O F&nbsp;&nbsp; K O R E A" class="btn2"
 			onclick="location='<%=cp%>/Outer.do';" 
 			 align="middle" style="text-align: left;"/><br/>
-
- 
  
  </div>
  
@@ -345,17 +366,7 @@ justify-content: space-between; align-items: center;">
  
  </div>
  
-
-
-
-
- 
- 
  </div>
-
-
-
-
 
 </body>
 </html>
