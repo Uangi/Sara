@@ -4,6 +4,8 @@ import java.io.File;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -59,9 +62,9 @@ public class ProductServlet extends HttpServlet {
 		// 파일 저장 경로 설정            
 		String root = getServletContext().getRealPath("/");
 		String path = root + "ProductImage" + File.separator + "saveFile";
-		
+
 		// newImage  -> saveFile          
-		
+
 		// 폴더 생성    
 		File f = new File(path);
 		if (!f.exists()) {
@@ -71,11 +74,11 @@ public class ProductServlet extends HttpServlet {
 		if (uri.indexOf("productCreated.do") != -1) {
 			url = "/admin/productCreated.jsp";	// 실제 주소
 			forward(req, resp, url);
-			
+
 			// 파일 업로드 @@
-			
+
 		} else if (uri.indexOf("productCreated_ok.do") != -1) {	// 가상 주소
-			
+
 			String encType = "UTF-8";
 			int maxSize = 10 * 1024 * 1024;
 
@@ -92,29 +95,119 @@ public class ProductServlet extends HttpServlet {
 				dto.setProductSubject(mr.getParameter("productSubject"));
 				dto.setSaveFileName(mr.getFilesystemName("upload"));
 				dto.setOriginalFileName(mr.getOriginalFileName("upload"));
-				
+
 				dto.setCategory(mr.getParameter("category"));
 				dto.setPrice(Integer.parseInt(mr.getParameter("price")));
-		        dto.setQuantity(Integer.parseInt(mr.getParameter("quantity")));
-//				dto.setHitCount(mr.getParameter("hitCount"));
+				dto.setQuantity(Integer.parseInt(mr.getParameter("quantity")));
+				//				dto.setHitCount(mr.getParameter("hitCount"));
 
 				dao.insertData(dto);
 			}
 
-//			url = cp + "/product/Top.do";	// 가상 주소
+			//			url = cp + "/product/Top.do";	// 가상 주소
 			url = cp + "/shop.jsp";
 			resp.sendRedirect(url);
 
 			//파일 목록 조회 @@
-			
+
 			// Top.do
-			
-			
-		} else if (uri.indexOf("Top.do") != -1) {
-			String pageNum = req.getParameter("pageNum");
-			
-			String category = req.getParameter("category");
 
+
+		} else if (uri.indexOf("shop.do") != -1){
+
+
+
+
+			url = "/shop.jsp";	// 이미지 파일 리스트의 실제 주소
+			forward(req, resp, url);
+
+
+
+		}  else if (uri.indexOf("category.do") != -1) {
+
+
+			String pageNum = req.getParameter("pageNum");
+			String category = req.getParameter("category");		
+		
+			int currentPage = 1;
+
+			if (pageNum != null) {
+				currentPage = Integer.parseInt(pageNum);
+			}
+
+
+				//   ü           
+				int dataCount = dao.getDataCount(category);
+
+			          
+				int numPerPage = 9;
+
+			     
+				int totalPage = myPage.getPageCount(numPerPage, dataCount);
+
+				if (currentPage > totalPage) {
+					currentPage = totalPage;
+				}
+
+				int start = (currentPage - 1) * numPerPage + 1;
+				int end = currentPage * numPerPage;
+
+				List<ProductDTO> lists = dao.getList(start, end, category);		
+
+
+
+				ProductDTO dto = new ProductDTO();
+
+				String param = "";
+
+				param = "category=" + category;
+
+				String listUrl = cp + "/product/category.do";	// 가상 주소
+
+				if(!param.equals("")) {
+
+					listUrl += "?" + param;
+				}
+
+
+
+				String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
+
+				String deletePath = cp + "/product/delete.do";
+
+				// 이미지 경로 
+
+				String imagePath = cp +"/ProductImage/saveFile";
+
+
+				req.setAttribute("imagePath", imagePath);		
+				req.setAttribute("lists", lists);	// Top에서 사용가능
+				req.setAttribute("pageIndexList", pageIndexList);
+				req.setAttribute("dataCount", dataCount);
+				req.setAttribute("pageNum", currentPage);
+				req.setAttribute("deletePath", deletePath);
+				req.setAttribute("totalPage", totalPage);
+
+				req.setAttribute("productName", dto.getProductName());
+				req.setAttribute("productSubject", dto.getProductSubject());
+				req.setAttribute("category", dto.getCategory());
+
+
+
+				url = "/shop/category.jsp";	// 이미지 파일 리스트의 실제 주소
+				forward(req, resp, url);
+
+	
+
+
+		} else if (uri.indexOf("category2.do") != -1) {
+			
+			
+			String pageNum = req.getParameter("pageNum");	
+			String searchKey = req.getParameter("searchKey");
+			String searchValue = req.getParameter("searchValue");
+			
+			
 			
 			int currentPage = 1;
 
@@ -122,399 +215,84 @@ public class ProductServlet extends HttpServlet {
 				currentPage = Integer.parseInt(pageNum);
 			}
 
-			//   ü           
-			int dataCount = dao.getDataCount();
+				if(searchValue==null) {
+					searchKey = "productName";
+					searchValue = "";
+				}else {
+					if(req.getMethod().equalsIgnoreCase("GET")) {
+						searchValue = URLDecoder.decode(searchValue, "UTF-8");
+					}
+				}
 
-			//              
-			int numPerPage = 9;
+				//전체 데이터 개수
+				int dataCount = dao.searchGetDataCount(searchKey, searchValue);
 
-			//          
-			int totalPage = myPage.getPageCount(numPerPage, dataCount);
+				int numPerPage = 9;
+				int totalPage = myPage.getPageCount(numPerPage, dataCount);
 
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
+				if(currentPage>totalPage) {
+					currentPage = totalPage;
+				}
 
-			int start = (currentPage - 1) * numPerPage + 1;
-			int end = currentPage * numPerPage;
+				int start = (currentPage - 1) * numPerPage +1;
+				int end =  currentPage * numPerPage;
 
-			List<ProductDTO> lists = dao.getList(start, end, category);
-			
-			List<ProductDTO> topProducts = dao.getList(start, end, "Top");
+				List<ProductDTO> lists = dao.serchGetLists(start, end, searchKey, searchValue);
 
-			
-			ProductDTO dto = new ProductDTO();
-			String listUrl = cp + "/product/Top.do?";	// 가상 주소
+				String param = "";
+				
+				if(searchValue!=null && !searchValue.equals("")) {
+					
+					param = "searchKey=" + searchKey;
+					param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+				}
+				
 
-			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
+				String urlList = cp + "/product/category.do";
+				
+				if(!param.equals("")) {
+					
+					urlList += "?" + param;
+				}
+				
+				String pageIndexList = myPage.pageIndexList(currentPage, totalPage, urlList);
+						
+				ProductDTO dto2 = new ProductDTO();
+			
+				String deletePath = cp + "/product/delete.do";
 
-			String deletePath = cp + "/product/delete.do";
-			String downloadPath = cp + "/product/download.do";
+				// 이미지 경로 
 
-			// 이미지 경로    
-			String imagePath = cp + "/ProductImage/saveFile";	// 파일 저장 경로
-			req.setAttribute("imagePath", imagePath);
-			
-			req.setAttribute("lists", lists);	// Top에서 사용가능
-			req.setAttribute("pageIndexList", pageIndexList);
-			req.setAttribute("dataCount", dataCount);
-			req.setAttribute("pageNum", currentPage);
-			req.setAttribute("deletePath", deletePath);
-			req.setAttribute("downloadPath", downloadPath);
-			req.setAttribute("totalPage", totalPage);
-			
-			req.setAttribute("productName", dto.getProductName());
-			req.setAttribute("productSubject", dto.getProductSubject());
-			req.setAttribute("category", dto.getCategory());
-			
-			req.setAttribute("topProducts", topProducts);
-			
-			
-			url = "/shop/Top.jsp";	// 이미지 파일 리스트의 실제 주소
-			forward(req, resp, url);
-			
-			// Outer.do
-			
-		} else if (uri.indexOf("Outer.do") != -1) {
-			String pageNum = req.getParameter("pageNum");
-			
-			String category = req.getParameter("category");
-			
-			
-			int currentPage = 1;
-			
-			if (pageNum != null) {
-				currentPage = Integer.parseInt(pageNum);
-			}
-			
-			//   ü           
-			int dataCount = dao.getDataCount();
-			
-			//              
-			int numPerPage = 9;
-			
-			//          
-			int totalPage = myPage.getPageCount(numPerPage, dataCount);
-			
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
-			
-			int start = (currentPage - 1) * numPerPage + 1;
-			int end = currentPage * numPerPage;
-			
-			List<ProductDTO> lists = dao.getList(start, end, category);
-			
-			List<ProductDTO> outerProducts = dao.getList(start, end, "Outer");
-			
-			
-			ProductDTO dto = new ProductDTO();
-			String listUrl = cp + "/product/Outer.do?";	// 가상 주소
-			
-			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
-			
-			String deletePath = cp + "/product/delete.do";
-			String downloadPath = cp + "/product/download.do";
-			
-			// 이미지 경로    
-			String imagePath = cp + "/ProductImage/saveFile";
-			req.setAttribute("imagePath", imagePath);
-			
-			req.setAttribute("lists", lists);	// Top에서 사용가능
-			req.setAttribute("pageIndexList", pageIndexList);
-			req.setAttribute("dataCount", dataCount);
-			req.setAttribute("pageNum", currentPage);
-			req.setAttribute("deletePath", deletePath);
-			req.setAttribute("downloadPath", downloadPath);
-			req.setAttribute("totalPage", totalPage);
-			
-			req.setAttribute("productName", dto.getProductName());
-			req.setAttribute("productSubject", dto.getProductSubject());
-			req.setAttribute("category", dto.getCategory());
-			
-			req.setAttribute("outerProducts", outerProducts);
-			
-			
-			url = "/shop/Outer.jsp";	// 이미지 파일 리스트의 실제 주소
-			forward(req, resp, url);
-			
-			
-			
-			// Accessories.do
-			
-		} else if (uri.indexOf("Accessories.do") != -1) {
-			String pageNum = req.getParameter("pageNum");
-			
-			String category = req.getParameter("category");
-			
-			
-			int currentPage = 1;
-			
-			if (pageNum != null) {
-				currentPage = Integer.parseInt(pageNum);
-			}
-			
-			//   ü           
-			int dataCount = dao.getDataCount();
-			
-			//              
-			int numPerPage = 9;
-			
-			//          
-			int totalPage = myPage.getPageCount(numPerPage, dataCount);
-			
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
-			
-			int start = (currentPage - 1) * numPerPage + 1;
-			int end = currentPage * numPerPage;
-			
-			List<ProductDTO> lists = dao.getList(start, end, category);
-			
-			List<ProductDTO> accessoriesProducts = dao.getList(start, end, "Accessories");
-			
-			
-			ProductDTO dto = new ProductDTO();
-			String listUrl = cp + "/product/Accessories.do?";	// 가상 주소
-			
-			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
-			
-			String deletePath = cp + "/product/delete.do";
-			String downloadPath = cp + "/product/download.do";
-			
-			// 이미지 경로    
-			String imagePath = cp + "/ProductImage/saveFile";
-			req.setAttribute("imagePath", imagePath);
-			
-			req.setAttribute("lists", lists);	// Top에서 사용가능
-			req.setAttribute("pageIndexList", pageIndexList);
-			req.setAttribute("dataCount", dataCount);
-			req.setAttribute("pageNum", currentPage);
-			req.setAttribute("deletePath", deletePath);
-			req.setAttribute("downloadPath", downloadPath);
-			req.setAttribute("totalPage", totalPage);
-			
-			req.setAttribute("productName", dto.getProductName());
-			req.setAttribute("productSubject", dto.getProductSubject());
-			req.setAttribute("category", dto.getCategory());
-			
-			req.setAttribute("accessoriesProducts", accessoriesProducts);
-			
-			
-			url = "/shop/Accessories.jsp";	// 이미지 파일 리스트의 실제 주소
-			forward(req, resp, url);
-			
-			
-			
-			// Bags.do
-			
-		} else if (uri.indexOf("Bags.do") != -1) {
-			String pageNum = req.getParameter("pageNum");
-			
-			String category = req.getParameter("category");
-			
-			
-			int currentPage = 1;
-			
-			if (pageNum != null) {
-				currentPage = Integer.parseInt(pageNum);
-			}
-			
-			//   ü           
-			int dataCount = dao.getDataCount();
-			
-			//              
-			int numPerPage = 9;
-			
-			//          
-			int totalPage = myPage.getPageCount(numPerPage, dataCount);
-			
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
-			
-			int start = (currentPage - 1) * numPerPage + 1;
-			int end = currentPage * numPerPage;
-			
-			List<ProductDTO> lists = dao.getList(start, end, category);
-			
-			List<ProductDTO> BagsProducts = dao.getList(start, end, "Bags");
-			
-			
-			ProductDTO dto = new ProductDTO();
-			String listUrl = cp + "/product/Bags.do?";	// 가상 주소
-			
-			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
-			
-			String deletePath = cp + "/product/delete.do";
-			String downloadPath = cp + "/product/download.do";
-			
-			// 이미지 경로    
-			String imagePath = cp + "/ProductImage/saveFile";
-			req.setAttribute("imagePath", imagePath);
-			
-			req.setAttribute("lists", lists);	// Top에서 사용가능
-			req.setAttribute("pageIndexList", pageIndexList);
-			req.setAttribute("dataCount", dataCount);
-			req.setAttribute("pageNum", currentPage);
-			req.setAttribute("deletePath", deletePath);
-			req.setAttribute("downloadPath", downloadPath);
-			req.setAttribute("totalPage", totalPage);
-			
-			req.setAttribute("productName", dto.getProductName());
-			req.setAttribute("productSubject", dto.getProductSubject());
-			req.setAttribute("category", dto.getCategory());
-			
-			req.setAttribute("bagsProducts", BagsProducts);
-			
-			
-			url = "/shop/Bags.jsp";	// 이미지 파일 리스트의 실제 주소
-			forward(req, resp, url);
-			
-			
-			
-			// Bottoms.do
-			
-		} else if (uri.indexOf("Bottoms.do") != -1) {
-			String pageNum = req.getParameter("pageNum");
-			
-			String category = req.getParameter("category");
-			
-			
-			int currentPage = 1;
-			
-			if (pageNum != null) {
-				currentPage = Integer.parseInt(pageNum);
-			}
-			
-			//   ü           
-			int dataCount = dao.getDataCount();
-			
-			//              
-			int numPerPage = 9;
-			
-			//          
-			int totalPage = myPage.getPageCount(numPerPage, dataCount);
-			
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
-			
-			int start = (currentPage - 1) * numPerPage + 1;
-			int end = currentPage * numPerPage;
-			
-			List<ProductDTO> lists = dao.getList(start, end, category);
-			
-			List<ProductDTO> bottomsProducts = dao.getList(start, end, "Bottoms");
-			
-			
-			ProductDTO dto = new ProductDTO();
-			String listUrl = cp + "/product/Bottoms.do?";	// 가상 주소
-			
-			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
-			
-			String deletePath = cp + "/product/delete.do";
-			String downloadPath = cp + "/product/download.do";
-			
-			// 이미지 경로    
-			String imagePath = cp + "/ProductImage/saveFile";
-			req.setAttribute("imagePath", imagePath);
-			
-			req.setAttribute("lists", lists);	// Top에서 사용가능
-			req.setAttribute("pageIndexList", pageIndexList);
-			req.setAttribute("dataCount", dataCount);
-			req.setAttribute("pageNum", currentPage);
-			req.setAttribute("deletePath", deletePath);
-			req.setAttribute("downloadPath", downloadPath);
-			req.setAttribute("totalPage", totalPage);
-			
-			req.setAttribute("productName", dto.getProductName());
-			req.setAttribute("productSubject", dto.getProductSubject());
-			req.setAttribute("category", dto.getCategory());
-			
-			req.setAttribute("bottomsProducts", bottomsProducts);
-			
-			
-			url = "/shop/Bottoms.jsp";	// 이미지 파일 리스트의 실제 주소
-			forward(req, resp, url);
-			
-			
-			
-			// Shoes.do
-			
-		} else if (uri.indexOf("Shoes.do") != -1) {
-			String pageNum = req.getParameter("pageNum");
-			
-			String category = req.getParameter("category");
-			
-			
-			int currentPage = 1;
-			
-			if (pageNum != null) {
-				currentPage = Integer.parseInt(pageNum);
-			}
-			
-			//   ü           
-			int dataCount = dao.getDataCount();
-			
-			//              
-			int numPerPage = 9;
-			
-			//          
-			int totalPage = myPage.getPageCount(numPerPage, dataCount);
-			
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
-			
-			int start = (currentPage - 1) * numPerPage + 1;
-			int end = currentPage * numPerPage;
-			
-			List<ProductDTO> lists = dao.getList(start, end, category);
-			
-			List<ProductDTO> shoesProducts = dao.getList(start, end, "Shoes");
-			
-			
-			ProductDTO dto = new ProductDTO();
-			String listUrl = cp + "/product/Shoes.do?";	// 가상 주소
-			
-			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
-			
-			String deletePath = cp + "/product/delete.do";
-			String downloadPath = cp + "/product/download.do";
-			
-			// 이미지 경로    
-			String imagePath = cp + "/ProductImage/saveFile";
-			req.setAttribute("imagePath", imagePath);
-			
-			req.setAttribute("lists", lists);	// Top에서 사용가능
-			req.setAttribute("pageIndexList", pageIndexList);
-			req.setAttribute("dataCount", dataCount);
-			req.setAttribute("pageNum", currentPage);
-			req.setAttribute("deletePath", deletePath);
-			req.setAttribute("downloadPath", downloadPath);
-			req.setAttribute("totalPage", totalPage);
-			
-			req.setAttribute("productName", dto.getProductName());
-			req.setAttribute("productSubject", dto.getProductSubject());
-			
-			req.setAttribute("category", dto.getCategory());
-			
-			req.setAttribute("price", dto.getPrice());
-			req.setAttribute("quantity", dto.getQuantity());
-			req.setAttribute("htiCount", dto.getHitCount());
-			
-			req.setAttribute("shoesProducts", shoesProducts);
-			
-			
-			url = "/shop/Shoes.jsp";	// 이미지 파일 리스트의 실제 주소
-			forward(req, resp, url);
-			
-			// Top 파일 삭제 @@
-			
-		} else if (uri.indexOf("delete.do") != -1) {
-			int productNum = Integer.parseInt(req.getParameter("num"));
+				String imagePath = cp +"/ProductImage/saveFile";
+
+
+				req.setAttribute("imagePath", imagePath);		
+				req.setAttribute("lists", lists);	// Top에서 사용가능
+				req.setAttribute("pageIndexList", pageIndexList);
+				req.setAttribute("dataCount", dataCount);
+				req.setAttribute("pageNum", currentPage);
+				req.setAttribute("deletePath", deletePath);
+				req.setAttribute("totalPage", totalPage);
+
+				req.setAttribute("productName", dto2.getProductName());
+				req.setAttribute("productSubject", dto2.getProductSubject());
+				req.setAttribute("category", dto2.getCategory());
+				 req.setAttribute("searchKey", searchKey);
+		         req.setAttribute("searchValue", searchValue);
+				
+				
+		
+
+
+
+				url = "/shop/category.jsp";	// 이미지 파일 리스트의 실제 주소
+				forward(req, resp, url);			
+			
+		}
+			else if (uri.indexOf("delete.do") != -1) {
+
+
+			int productNum = Integer.parseInt(req.getParameter("productNum"));
 			String pageNum = req.getParameter("pageNum");
 			String category = req.getParameter("category");
 
@@ -526,17 +304,20 @@ public class ProductServlet extends HttpServlet {
 			// DB 주소 삭제
 			dao.deleteData(productNum);
 
-			url = cp + "/product/" + category + ".do?pageNum=" + pageNum;
+			url = cp + "/product/category.do?category=" + category + "&pageNum=" + pageNum;
+
+
+
 			resp.sendRedirect(url);
 			/* 원래 있던 홈페이지로 리다이렉팅이 안되서 버벅이는듯 ? */
-			
-//			url = cp + "/product/" + category + ".do";
-//			resp.sendRedirect(url);
-			
-//			url = cp + "/product/Top.do?pageNum=" + pageNum;
-//			resp.sendRedirect(url);
-			
-			
+
+			//			url = cp + "/product/" + category + ".do";
+			//			resp.sendRedirect(url);
+
+			//			url = cp + "/product/Top.do?pageNum=" + pageNum;
+			//			resp.sendRedirect(url);
+
+
 			//파일 다운로드 @@
 		} else if (uri.indexOf("download.do") != -1) {
 			int productNum = Integer.parseInt(req.getParameter("productNum"));
@@ -551,7 +332,7 @@ public class ProductServlet extends HttpServlet {
 			boolean flag = FileManager.doFileDownload(resp, dto.getSaveFileName(), dto.getOriginalFileName(), path);
 
 			if (flag == false) {	// 다운로드가 실패하면 
-				
+
 				resp.setContentType("text/html;charset=UTF-8");
 
 				PrintWriter out = resp.getWriter();
@@ -562,27 +343,27 @@ public class ProductServlet extends HttpServlet {
 			}
 
 		} else if (uri.indexOf("shop.do") != -1) {
-			
-			
+
+
 			ProductDTO dto = new ProductDTO();
 			String listUrl = cp + "/product/shop.do?";	// 가상 주소
 
 
-//			String downloadPath = cp + "/product/download.do";
+			//			String downloadPath = cp + "/product/download.do";
 
 			// 이미지 경로    
 			String imagePath = cp + "/ProductImage/saveFile";	// 파일 저장 경로
 			req.setAttribute("imagePath", imagePath);
-			
-//			req.setAttribute("downloadPath", downloadPath);
-			
+
+			//			req.setAttribute("downloadPath", downloadPath);
+
 			url = "/shop.jsp";	// 이미지 파일 리스트의 실제 주소
 			forward(req, resp, url);
-				   
+
 		}
-		
-		
+
+
 
 	}
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
 }

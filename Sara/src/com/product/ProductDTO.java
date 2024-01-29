@@ -11,7 +11,26 @@ public class ProductDTO {
 	private int price;
 	private int quantity;
 	private int hitCount;
+	
+	
+	private int tprice = 30;
+	private String tname = "가디건";
 
+	public String getTname() {
+		return tname;
+	}
+
+	public void setTname(String tname) {
+		this.tname = tname;
+	}
+
+	public int getTprice() {
+		return tprice;
+	}
+
+	public void setTprice(int tprice) {
+		this.tprice = tprice;
+	}
 
 	public int getProductNum() {
 		return productNum;
