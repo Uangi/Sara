@@ -200,21 +200,25 @@ public class SignUpDAO {
 	public int updateData(SignUpDTO dto) {
 
 		int result = 0;
-
 		PreparedStatement pstmt = null;
 		String sql;
 
 		try {
-
-			sql = "update signup set userpwd=?,username=?,userbirth=?,usertel=? ";
-			sql += "where userid=?";
-
+			sql = "update signup set userpwd = ?, sample4_postcode = ?, sample4_roadAddress = ?, sample4_jibunAddress = ?, ";
+			sql += "sample4_detailAddress = ?, sample4_extraAddress = ?, bank = ?, act = ? ";
+			sql += "where userid= ?";
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setString(1, dto.getUserPwd());
-
+			pstmt.setString(2, dto.getSample4_postcode());
+			pstmt.setString(3, dto.getSample4_roadAddress());
+			pstmt.setString(4, dto.getSample4_jibunAddress());
+			pstmt.setString(5, dto.getSample4_detailAddress());
+			pstmt.setString(6, dto.getSample4_extraAddress());
+			pstmt.setString(7, dto.getBank());
+			pstmt.setString(8, dto.getAct());
+			pstmt.setString(9, dto.getUserId());
+			
 			result = pstmt.executeUpdate();
-
 			pstmt.close();
 
 		} catch (Exception e) {

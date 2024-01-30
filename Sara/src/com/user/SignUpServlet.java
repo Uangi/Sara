@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.join.CustomInfo;
+import com.join.MemberDTO;
 import com.util.DBConn;
 
 public class SignUpServlet extends HttpServlet {
@@ -149,12 +150,13 @@ public class SignUpServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		
-		CustomInfo info = new CustomInfo();
+//		CustomInfo info = new CustomInfo();
+		 SignUpDTO loggedInUser = (SignUpDTO)session.getAttribute("loggedInUser");
+		 loggedInUser.setUserId(dto.getUserId());         
+		 loggedInUser.setUserName(dto.getUserName());                
 		
-		info.setUserId(dto.getUserId());         
-		info.setUserName(dto.getUserName());                
+		session.setAttribute("loggedInUser", loggedInUser);
 		
-		session.setAttribute("customInfo", info);
 		session.setMaxInactiveInterval(-1);
 		url = cp;
 		resp.sendRedirect(url);	
@@ -173,14 +175,47 @@ public class SignUpServlet extends HttpServlet {
 	}else if(uri.indexOf("userUpdate.do")!=-1) {
 		
 		HttpSession session = req.getSession();
-		CustomInfo info = (CustomInfo)session.getAttribute("customInfo");
-		SignUpDTO dto = dao.getReadData(info.getUserId());
+//		CustomInfo info = (CustomInfo)session.getAttribute("customInfo");
+		SignUpDTO loggedInUser = (SignUpDTO)session.getAttribute("loggedInUser");
+		SignUpDTO dto = dao.getReadData(loggedInUser.getUserId());
 		req.setAttribute("dto", dto);
 		url="/Function/userUpdate.jsp";
 
 		forward(req, resp, url);
 		
-		// 삭제
+	} else if(uri.indexOf("userUpdate_ok.do")!=-1) {
+		
+		HttpSession session = req.getSession();	// request에 대한 세션 객체를 가져오거나, 새로운 세션 객체 생성
+//		CustomInfo info = (CustomInfo)session.getAttribute("customInfo");	//
+		SignUpDTO loggedInUser = (SignUpDTO)session.getAttribute("loggedInUser");
+		
+		// 사용자 로그인 정보를 가진 
+		
+		String userId = loggedInUser.getUserId();
+		SignUpDTO dto = dao.getReadData(userId);	
+		
+		dto.setUserId(userId);
+		dto.setUserPwd(req.getParameter("userPwd"));
+		dto.setSample4_postcode(req.getParameter("sample4_postcode"));
+		dto.setSample4_roadAddress(req.getParameter("sample4_roadAddress"));
+		dto.setSample4_jibunAddress(req.getParameter("sample4_jibunAddress"));
+		dto.setSample4_detailAddress(req.getParameter("sample4_detailAddress"));
+		dto.setSample4_extraAddress(req.getParameter("sample4_extraAddress"));
+		dto.setTel1(req.getParameter("tel1"));
+		dto.setTel2(req.getParameter("tel2"));
+		dto.setTel3(req.getParameter("tel3"));
+		dto.setMobile1(req.getParameter("mobile1"));
+		dto.setMobile2(req.getParameter("mobile2"));
+		dto.setMobile3(req.getParameter("mobile3"));
+		dto.setBank(req.getParameter("bank"));
+		dto.setAct(req.getParameter("act"));
+		
+		dao.updateData(dto);
+		
+		url = cp;
+		resp.sendRedirect(url);
+		
+		// 삭제완료
 	} else if (uri.indexOf("userWithDrawal.do") != -1) {
 		String userId = req.getParameter("userId");
 
@@ -190,7 +225,7 @@ public class SignUpServlet extends HttpServlet {
 		session.removeAttribute("loggedInUser");
 		session.invalidate();
 		
-		url = cp + "/product/shop.do";
+		url = cp + "/product/shop.do";	// 회원탈퇴하면 굿바이하면서 만든 주소로 보내기
 		resp.sendRedirect(url);
 
 	}
