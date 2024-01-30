@@ -11,29 +11,26 @@ public class BasketDTO {
 	private int productNum;
 	private String saveFileName;
 	private int rnum;
-	
-	private int quantity;
-	private int totalprice;
-	
-	
-	
-	
-	public int getTotalprice() {
-		return totalprice;
+	private int total;
+
+	public int getTotal() {
+		return total;
 	}
 
-	public void setTotalprice(int totalprice) {
-		this.totalprice = totalprice;
+	public void setTotal(int total) {
+		this.total = total;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public int getQty() {
+		return qty;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
-	
+
+	private int qty;
+
 	public String getUserId() {
 		return userId;
 	}

@@ -10,15 +10,12 @@ import com.user.SignUpDTO;
 
 public class BasketDAO {
 
-
-
 	private Connection conn;
 
 	public BasketDAO(Connection conn) {
 
-		this.conn= conn;
+		this.conn = conn;
 	}
-
 
 	public int basketGetMaxNum() {
 
@@ -36,7 +33,7 @@ public class BasketDAO {
 
 			rs = pstmt.executeQuery();
 
-			if(rs.next()) {
+			if (rs.next()) {
 
 				maxNum = rs.getInt(1);
 
@@ -44,7 +41,6 @@ public class BasketDAO {
 
 			rs.close();
 			pstmt.close();
-
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -67,11 +63,11 @@ public class BasketDAO {
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1,userId);
+			pstmt.setString(1, userId);
 
 			rs = pstmt.executeQuery();
 
-			if(rs.next()) {
+			if (rs.next()) {
 
 				dataCount = rs.getInt(1);
 
@@ -80,7 +76,6 @@ public class BasketDAO {
 			rs.close();
 			pstmt.close();
 
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -88,29 +83,19 @@ public class BasketDAO {
 		return dataCount;
 	}
 
-
-
 	public int basketInsertData(BasketDTO dto) {
 
-
 		int result = 0;
-
 
 		PreparedStatement pstmt = null;
 		String sql;
 
 		try {
 
+			sql = "insert into basket (userId,userName,productName,price,productNum,num,saveFileName,created,qty) ";
+			sql += "values (?,?,?,?,?,?,?,sysdate,?)";
 
-
-			sql = "insert into basket (userId,userName,productName,price,productNum,num,saveFileName,quantity,created) ";
-			sql+= "values (?,?,?,?,?,?,?,?,sysdate)";
-
-
-
-
-			pstmt = conn.prepareStatement(sql); //        Ϻ       ˻   
-
+			pstmt = conn.prepareStatement(sql); // Ϻ ˻
 
 			pstmt.setString(1, dto.getUserId());
 			pstmt.setString(2, dto.getUserName());
@@ -119,31 +104,23 @@ public class BasketDAO {
 			pstmt.setInt(5, dto.getProductNum());
 			pstmt.setInt(6, dto.getNum());
 			pstmt.setString(7, dto.getSaveFileName());
-			
-			pstmt.setInt(8, dto.getQuantity());
-			
+			pstmt.setInt(8, dto.getQty());
 
 			result = pstmt.executeUpdate();
 
 			pstmt.close();
 
-
-
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
 
 		return result;
 
 	}
 
-	public List<BasketDTO> basketGetList(int start,int end ,String userId){
-
+	public List<BasketDTO> basketGetList(int start, int end, String userId) {
 
 		List<BasketDTO> lists = new ArrayList<BasketDTO>();
-
 
 		PreparedStatement pstmt = null;
 
@@ -153,11 +130,10 @@ public class BasketDAO {
 
 		try {
 
-
-			sql ="select * from (";
-			sql+="select rownum rnum, data.* from(";
-			sql+="select num,userId,userName,productName,productNum,price,saveFileName,quantity,created from basket where userid=? order by num desc) data) ";
-			sql+="where rnum>=? and rnum<=?";
+			sql = "select * from (";
+			sql += "select rownum rnum, data.* from(";
+			sql += "select num,userId,userName,productName,productNum,price,saveFileName,created,qty,price*qty total from basket where userid=? order by num desc) data) ";
+			sql += "where rnum>=? and rnum<=?";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -167,8 +143,7 @@ public class BasketDAO {
 
 			rs = pstmt.executeQuery();
 
-
-			while(rs.next()) {
+			while (rs.next()) {
 
 				BasketDTO dto = new BasketDTO();
 
@@ -177,21 +152,19 @@ public class BasketDAO {
 				dto.setUserId(rs.getString("userId"));
 				dto.setUserName(rs.getString("userName"));
 				dto.setProductName(rs.getString("productName"));
-				dto.setProductNum(rs.getInt("productNum"));			
+				dto.setProductNum(rs.getInt("productNum"));
 				dto.setPrice(rs.getInt("price"));
 				dto.setSaveFileName(rs.getString("saveFileName"));
-				dto.setQuantity(rs.getInt("quantity"));
 				dto.setCreated(rs.getString("created"));
+				dto.setQty(rs.getInt("qty"));
+				dto.setTotal(rs.getInt("total"));
 
-
-				lists.add(dto);			
+				lists.add(dto);
 
 			}
 
 			pstmt.close();
 			rs.close();
-
-
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -220,7 +193,6 @@ public class BasketDAO {
 
 			pstmt.close();
 
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -229,5 +201,74 @@ public class BasketDAO {
 
 	}
 
+	public int basketTotal(String userId) {
 
+		int total = 0;
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+
+			sql = "SELECT SUM(price * qty) AS total2 FROM basket where userid=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, userId);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				total = rs.getInt(1);
+
+			}
+
+			rs.close();
+			pstmt.close();
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		return total;
+	}
+	
+	public String productName(String userId) {
+
+		String productName = ""; 
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+
+			sql = "SELECT productName FROM (SELECT productName FROM basket where userId =?";
+			sql+= "ORDER BY created DESC) WHERE ROWNUM = 1";	
+						      
+						      
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1,userId);
+
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+
+				productName = rs.getString(1);
+
+			}
+
+			rs.close();
+			pstmt.close();
+
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		return productName;
+	}
 }
