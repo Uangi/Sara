@@ -51,7 +51,7 @@ public class SignUpServlet extends HttpServlet {
 			url="/Function/userCreated.jsp";
 			forward(req, resp, url);
 			
-		}else if(uri.indexOf("userCreated_ok.do")!=-1){
+		}else if(uri.indexOf("userCreated.do")!=-1){
 		
 			SignUpDTO dto = new SignUpDTO();
 
@@ -84,7 +84,7 @@ public class SignUpServlet extends HttpServlet {
 
 			resp.sendRedirect(url);	
 		
-		}else if(uri.indexOf("idcheked_ok.do")!=-1){
+		} else if(uri.indexOf("idcheked_ok.do")!=-1){
 			 String userId = req.getParameter("userId");
 			 String id = "";
 			 System.out.println(userId);
@@ -136,6 +136,7 @@ public class SignUpServlet extends HttpServlet {
 		
 		String userId = req.getParameter("userId");
 		String userPwd = req.getParameter("userPwd");
+		
 		SignUpDTO dto = dao.getReadData(userId);
 		
 		if(dto==null||(!dto.getUserPwd().equals(userPwd))) {
@@ -154,7 +155,7 @@ public class SignUpServlet extends HttpServlet {
 		info.setUserName(dto.getUserName());                
 		
 		session.setAttribute("customInfo", info);
-		
+		session.setMaxInactiveInterval(-1);
 		url = cp;
 		resp.sendRedirect(url);	
 		
@@ -169,7 +170,6 @@ public class SignUpServlet extends HttpServlet {
 		resp.sendRedirect(url);	
 			
 		
-		// 수정
 	}else if(uri.indexOf("userUpdate.do")!=-1) {
 		
 		HttpSession session = req.getSession();
@@ -180,9 +180,10 @@ public class SignUpServlet extends HttpServlet {
 
 		forward(req, resp, url);
 		
-		// 회원탈퇴
+		// 삭제
 	} else if (uri.indexOf("userWithDrawal.do") != -1) {
 		String userId = req.getParameter("userId");
+
 		dao.deleteData(userId);
 
 		HttpSession session = req.getSession();	// 회원탈퇴 후 세션 삭제

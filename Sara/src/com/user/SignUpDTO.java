@@ -25,6 +25,24 @@ public class SignUpDTO {
 	private String bank;
 	private String act;
 
+	
+	
+	
+	private String content;
+	private String created;
+	private int	rev;
+	
+	
+	private int num;
+	private int price;
+	private int rnum;
+	private String pcode;
+	private String sor;
+	private String subject;
+	private String saveFileName;
+	private String originalFileName;
+	
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -178,5 +196,93 @@ public class SignUpDTO {
 		this.act = act;
 	}
 
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getCreated() {
+		return created;
+	}
+
+	public void setCreated(String created) {
+		this.created = created;
+	}
+
+	public int getRev() {
+		return rev;
+	}
+
+	public void setRev(int rev) {
+		this.rev = rev;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
+	public String getPcode() {
+		return pcode;
+	}
+
+	public void setPcode(String pcode) {
+		this.pcode = pcode;
+	}
+
+	public String getSor() {
+		return sor;
+	}
+
+	public void setSor(String sor) {
+		this.sor = sor;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getSaveFileName() {
+		return saveFileName;
+	}
+
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
+	}
+
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
 
 }
