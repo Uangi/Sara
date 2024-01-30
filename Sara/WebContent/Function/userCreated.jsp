@@ -283,19 +283,17 @@ label {
 	align-items: center;
 }  
     
-
-        
 </style>
 
 
 </head>
 <body>
 
+
+
 <div id = "tot" >
 <div id = "signUp" >
-
 <div id = "signUp2" style="margin-left: 205px;">
-
 <div id = "tit">
 <a href="<%=cp %>/main.jsp">
 <img src="http://192.168.0.10:8081/Sara/imageSara/사라찐누끼.png" width="200px;" ></a><br/><br/>
@@ -324,18 +322,9 @@ label {
     
         <b><span style="color: red;">*&nbsp;</span>I D  :</b>
         
-<%--         <c:if test="${empty userId  }"> --%>
         <input type="text" id = "id" name = "userId" placeholder=" 영문/숫자 만 입력 가능 "
         style="border: none; outline: none; background: #fff; color: #000;" size="20px">
-<%--         </c:if> --%>
-        
-<%--         <c:if test="${empty userId  }"> --%>
-<!-- 		<td> <input type="text" name="userId" class="input1" />  -->
-<%-- 		</c:if> --%>
         &nbsp;
-<!--         <button type="button" onclick="checkDuplicate()"  -->
-<!--         style=" outline-width: 1px ; background: #fff; color: #000;">아이디 확인</button> -->
-        
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="checkbox" name="userId2" onclick="idCheck();" style="color: #000;"/>
         &nbsp;가입 가능여부 
@@ -349,15 +338,8 @@ label {
         <b><span style="color: red;">*&nbsp;</span>P W :</b>
         
         <input type="password" name="userPwd" placeholder =" 4자리 이상 입력 가능" style="border: none; outline: none; background: #fff; color: #000;" size="20px">
-        
-<!--         <button type="button" onchange="pwdChecked()" -->
-<!--         style="outline-width: 1px ; background: #fff; color: #000;">패스워드 확인</button> -->
-            
     </td>
 </tr>
-
-
-
 
 
 <tr>
@@ -368,8 +350,6 @@ label {
         <input type="password" name="userPwd2" placeholder =" 패스워드 일치 여부 확인"
         style="border: none; outline: none; background: #fff; color: #000;" size="20px">
         
-<!-- 		<button type="button" onclick="checkDuplicate()" style=" -->
-<!--             outline-width: 1px ; background: #fff; color: #000;">확인</button>&nbsp; -->
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -377,10 +357,6 @@ label {
         패스워드 확인 
     </td>
 </tr>
-
-
-
-
 
 <tr>
     <td style="margin: auto;"></td>
@@ -414,13 +390,6 @@ label {
         <input type="text" id="sample4_extraAddress"  name ="sample4_extraAddress" placeholder=" 참고항목" style="border: none; outline: none; background: #fff; color: #000;">
     </td>
 </tr>
-
-
-
-
-
-
-
 
 
 <tr>
@@ -497,8 +466,6 @@ label {
         <b>E M A I L :</b>
         <input type="text" name="email" class = "input1" placeholder=" ex) Examplefff@example.com" size="30" style="border: none; outline: none; background: #fff; color: #000;">
         
-<!--         <button type="button" onclick="checkDuplicate()" style=" -->
-<!--             outline-width: 1px ; background: #fff; color: #000;">이메일 중복확인</button> -->
     </td>
 </tr>
 
@@ -532,15 +499,13 @@ label {
 <tr>
 	
     <td style="margin: auto;"></td>
-    <td colspan="2" align="center" style="border-left: none; " width="540" height="50">
+    <td colspan="2" align="left" style="border-left: none; padding-left: 40px;" width="540" height="50">
 	
 	<b>G E N D E R :</b>
 	<input type="radio" name="gender" value="남자"><b>남자&nbsp;&nbsp;&nbsp;&nbsp;</b>
 	<input type="radio" name="gender" value="여자"> <b>여자
 			&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;</b> 
-	<input type="radio" name="r2" checked="checked"><b>내국인&nbsp;&nbsp;&nbsp;&nbsp;</b>
-	<input type="radio" name="r2"> <b>외국인</b>
 	
 	</td>
 </tr>	
@@ -553,8 +518,6 @@ label {
         <input type="text" name="birth" class = "input1" placeholder=" ex) 970423" style="border: none; outline: none; background: #fff; color: #000;">
     </td>
 </tr>
-
-
 
 
 
@@ -578,11 +541,6 @@ label {
 			&nbsp;&nbsp;
         <input type="text" name="act" onkeypress="onlyNum();" size="30" 
         style="border: none; outline: none; background: #fff; color: #000; text-align: center;">
-      
-<!--       	<button type="button" onclick="checkDuplicate()" style=" -->
-<!--             outline-width: 1px ; background: #fff; color: #000;">계좌 확인</button> -->
-      
-      
      </td>
 </tr>
 
@@ -603,7 +561,6 @@ label {
 <input type="button" class="btn" value=" J O I N "  onclick="sendIt();" style="background: #fff; color: #000;"/> &nbsp;</button>
 <input type="reset" value=" R E S E T " onclick="document.myForm.id.focus()"  style="background: #fff; color: #000;"/> &nbsp;
 <input type="button" class="btn" value=" C A N C L E"  style="background: #fff; color: #000;" onclick="javascript:location.href='<%=cp%>/product/shop.do';" />
-<!-- /Sara/project/userCreated_ok.do"; -->
   
      </td>
 </tr>
@@ -611,9 +568,7 @@ label {
 </table>
 </div>
 
-
 <div id = "butt">
-
 
 
 <table>
@@ -642,8 +597,6 @@ label {
 </table>
 </div>
 </div>
-
-
 
 
 <div id="ha" style="display: flex; justify-content: space-between; align-items: center;">
@@ -681,15 +634,10 @@ label {
 <input type="button" value="&nbsp; A B O U T&nbsp;&nbsp; U S &nbsp;" class="btn2"
 			onclick="location='<%=cp%>/sara/acc.jsp';" 
 			 align="middle" style="font-size: 18px;"/><br/>
-			 
-			 
 			 <br/><br/><br/>
-			 
-			 
 			 
 <a href="<%=cp %>/main.jsp">
 <img src="http://192.168.0.10:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
-			 
 			 
 			 <br/>
 			 
@@ -701,8 +649,6 @@ label {
 			onclick="location='<%=cp%>/outer.jsp';" 
 			 align="middle" style="text-align: left; color: #000"/><br/>
 
- 
- 
  </div>
  
  
@@ -710,15 +656,13 @@ label {
  
  <b>©️ copyright 2024. SARA. All Rights Reserved.</b>
  
- </div>
+								 </div>
  
-</div>
+						</div>
  
- </div>
+ 				</div>
 
-
-
-</div>
+		</div>
 </div>
 </form>
 </body>
