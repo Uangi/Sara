@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <button onclick="requestPay()">결제하기</button>
 <script type="text/javascript">
-	IMP.init("imp번호");	
+	IMP.init("imp14397622");	
 	let tname = '${tname}';
 	
 	function requestPay() {
