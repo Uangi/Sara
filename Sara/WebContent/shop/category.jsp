@@ -11,14 +11,15 @@
     SignUpDTO loggedInUser = (SignUpDTO) session.getAttribute("loggedInUser");
 
     Connection conn = DBConn.getConnection();
-    SignUpDAO signupDAO = new SignUpDAO(conn);
+    SignUpDAO signUpDAO = new SignUpDAO(conn);
 
-    loggedInUser = signupDAO.getDTOByUserId(loggedInUser.getUserId());
-
-    if (loggedInUser == null) {
-        response.sendRedirect(cp + "/Function/login.jsp");
-        return;
+    if (loggedInUser != null) {
+        loggedInUser = signUpDAO.getDTOByUserId(loggedInUser.getUserId());
     }
+   
+    String category = request.getParameter("category");
+    String currentSearch3 = request.getParameter("search3");
+
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,7 +30,7 @@
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/shop/data/style.css"/>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/shop/data/created.css"/>
-<link rel="stylesheet" type="text/css" href="<%=cp%>/shop/css/list.css"/>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/shop/data/list.css"/>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <script type="text/javascript" src="<%=cp%>/shop/js/list.js"></script>	
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
@@ -42,17 +43,47 @@ function searchData() {
     f.action ="<%=cp%>/product/category2.do";        
     f.submit();
 }
-</script>
-<script>
-function highData() {
-   
-	var f = document.getElementById("myForm");
-    var sort = 'high';
-    var category = f.category.value;
-    f.action = "<%=cp%>/product/category.do?category="+category+"&sort="+sort;   
-    f.submit();
-    
+
+function highData() {	// 높은 가격 순
+    var f = document.myForm;
+
+        f.action ="<%=cp%>/product/high.do";
+        f.submit();
+    }
+
+
+function lowData() {	// 낮은 가격 순
+    var f = document.myForm;
+
+        f.action ="<%=cp%>/product/low.do";
+        f.submit();
+    }
+
+
+function hitData() {		// 높은 조회수 순
+    var f = document.myForm;
+
+        f.action ="<%=cp%>/product/hit.do";
+        f.submit();
+    }
+
+function logout() {
+    // 현재 카테고리와 페이지 정보 가져오기
+    var currentCategory = '<%= category %>';
+    var currentPage = '<%= request.getParameter("pageNum") %>';
+
+    // 카테고리와 페이지 정보를 포함한 로그아웃 URL 구성
+    var logoutURL = '<%=cp%>/user/logout.do?category=' + category + '&pageNum=' + currentPage;
+
+    // 로그아웃 URL로 리다이렉트
+    location = logoutURL;
 }
+
+
+function myPage() {
+    location='<%=cp%>/user/myPage.do';
+}
+
 
 </script>
 
@@ -131,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
                align="middle"/>
         
         <input type="button" value="&nbsp; MY PAGE &nbsp;" class="btn2"
-               onclick="location='<%=cp%>/user/myPage.do';" 
+               onclick="myPage()" 
                align="middle"/>
 <%
     } else {
@@ -145,11 +176,10 @@ document.addEventListener('DOMContentLoaded', function() {
 %>
 
 <input type="button" value="&nbsp; CART &nbsp;" class="btn2"
-			onclick="location='<%=cp%>/sara/bottoms.jsp';" 
+			onclick="location='<%=cp%>/shoppingcart/basket.do';" 
 			 align="middle"/>
 
 </div><br/>
-
 
 <div style="display: flex; justify-content: space-between; align-items:top: ;">
 
@@ -158,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.5//Sara/imageSara/사라찐누끼.png" width="300" align="right" style="padding-left: 50px;"></a><br/>
+<img src="http://192.168.16.2:8080/Sara/imageSara/사라찐누끼.png" width="300" align="right" style="padding-left: 50px;"></a><br/>
 
 
 
@@ -203,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	   <td>
 	   <br/>
 	   
-		<img src="http://192.168.16.5:8080//Sara/imageSara/서치콘누끼.png"
+		<img src="http://192.168.16.2:8080/Sara/imageSara/서치콘누끼.png"
 			width="30" align="middle" style="margin-bottom: 16px;"/>
 									
 			<select name="searchKey" class="selectField" style="border: none; outline: none;" >
@@ -232,11 +262,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<form action="<%=cp%>/product/category.do" name="myForm" id = "myForm" method="post">
+<form action="" name="myForm" method="post">
+<input type="hidden" name="category" value="<%= category %>"/>
 <table width="900" border="0" cellpadding="0" cellspacing="0" style="margin: auto;">
 <tr>
 <td>
-<input type="button"   name="high" onclick="highData();"/>높은 가격순
+<input type="checkbox"   name="high" onclick="highData();"/>높은 가격순
 <input type="checkbox"  name="low" onclick="lowData();"/>낮은 가격순
 <input type="checkbox" name="hitcount" onclick="hitData() ;"/>조회수 순
 </td>
@@ -290,48 +321,7 @@ bordercolor="#000" style="margin: auto;">
 
 <table width="1200" border = "0" cellpadding = "0" cellspacing = "0" align = "center">
 <c:set var="n" value="0"/>
-
-<%-- <c:choose> --%>
-<%-- <c:when test="${param.high == 'on'}"> --%>
-<!--         높은 가격순 체크박스가 체크된 경우 -->
-<%--         <c:forEach var="dto" items="${highlists}"> --%>
-<!--             highlists를 사용하여 높은 가격순으로 출력 -->
-<%--             <c:if test="${n==0}"> --%>
-<!-- 		<tr bgcolor="#FFFFFF"> -->
-<%-- 	</c:if> --%>
-<%-- 	<c:if test="${n!=0&&n%3==0 }"> --%>
-<!-- 		</tr><tr bgcolor="#FFFFFF" > -->
-<%-- 	</c:if> --%>
-<!-- 	<td align="center" width="250"> -->
-	
-<%-- 		 <a href="<%=cp %>/detail/board.do?productNum=${dto.productNum }&imagePath=${imagePath}&saveFileName=${dto.saveFileName}"> --%>
-<%-- 			<img src="${imagePath}/${dto.saveFileName}" style="width: 350px;height: 300px;" /></a> --%>
-<!-- 			<div style="text-align: center;"> -->
-<%-- 				${dto.productNum}&nbsp; --%>
-<%-- 				  <c:if test="${loggedInUser != null && 'manager' eq loggedInUser.getUserId()}"> --%>
-<%-- 				<a href="${deletePath}?productNum=${dto.productNum}&pageNum=${pageNum}&category=${dto.category}">제품삭제</a> --%>
-<%-- 				</c:if> --%>
-<!-- 			</div>	 -->
-<%-- 			상품명 : ${dto.productName},  상품가격 : ${dto.price} --%>
-					 
-<!-- 			<img src="http://192.168.16.5:8080/Sara/imageSara/쇼핑백누끼.png" -->
-<%-- 			 onclick="addToCart('${dto.saveFileName}')" alt="cart" width="15" > --%>
-			  
-<!--             <img src="http://192.168.16.5:8080/Sara/imageSara/저장누끼.png" -->
-<%--             onclick="addToWishlist('${dto.saveFileName}')" alt="wishlist" width="12">  --%>
-            
-<%--             조회수:${dto.hitCount} --%>
-            
-            
-            
-<%-- 			종류: ${dto.category}, 상품 설명: ${dto.productSubject}, 재고: ${dto.quantity}개, 조회수: ${dto.hitCount} --%>
-
-	</td>
-<c:set var="n" value="${n+1}"/>	
-            
-            <!-- 여기에 출력 내용을 작성 -->
-<!--     가격순 체크박스가 체크되지 않은 경우 -->
-<c:forEach var="dto" items="${highlists}">
+<c:forEach var="dto" items="${lists}">
 	<c:if test="${n==0}">
 		<tr bgcolor="#FFFFFF">
 	</c:if>
@@ -343,17 +333,17 @@ bordercolor="#000" style="margin: auto;">
 		 <a href="<%=cp %>/detail/board.do?productNum=${dto.productNum }&imagePath=${imagePath}&saveFileName=${dto.saveFileName}">
 			<img src="${imagePath}/${dto.saveFileName}" style="width: 350px;height: 300px;" /></a>
 			<div style="text-align: center;">
-				${dto.productNum}&nbsp;
+				
 				  <c:if test="${loggedInUser != null && 'manager' eq loggedInUser.getUserId()}">
 				<a href="${deletePath}?productNum=${dto.productNum}&pageNum=${pageNum}&category=${dto.category}">제품삭제</a>
 				</c:if>
 			</div>	
 			상품명 : ${dto.productName},  상품가격 : ${dto.price}
 					 
-			<img src="http://192.168.16.5:8080/Sara/imageSara/쇼핑백누끼.png"
+			<img src="http://192.168.16.2:8080/Sara/imageSara/쇼핑백누끼.png"
 			 onclick="addToCart('${dto.saveFileName}')" alt="cart" width="15" >
 			  
-            <img src="http://192.168.16.5:8080/Sara/imageSara/저장누끼.png"
+            <img src="http://192.168.16.2:8080/Sara/imageSara/저장누끼.png"
             onclick="addToWishlist('${dto.saveFileName}')" alt="wishlist" width="12"> 
             
             조회수:${dto.hitCount}
@@ -364,7 +354,7 @@ bordercolor="#000" style="margin: auto;">
 
 	</td>
 <c:set var="n" value="${n+1}"/>			
-</c:forEach>	
+</c:forEach>			
 <!-- 사진을 1개 넣었을때 2번째 TD가 만들기-->	
 <c:if test="${n%3==1 }">	
 		<td ></td>
@@ -446,7 +436,7 @@ justify-content: space-between; align-items: center;">
 			 
 			 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.5:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
+<img src="http://192.168.16.2:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
 			 
 			 
 			 <br/>
@@ -470,16 +460,9 @@ justify-content: space-between; align-items: center;">
  
  </div>
  
-
-
-
-
  
  
  </div>
-
-
-
 
 
 </body>

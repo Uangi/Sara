@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ProductDAO {
 
 	private Connection conn = null;
@@ -67,7 +66,6 @@ public class ProductDAO {
 			pstmt.setInt(7, dto.getPrice());
 			pstmt.setInt(8, dto.getQuantity());
 
-			
 			result = pstmt.executeUpdate();
 
 			pstmt.close();
@@ -79,57 +77,57 @@ public class ProductDAO {
 		return result;
 
 	}
-	
+
 	public List<ProductDTO> getList(int start, int end, String category) {
-		
+
 		List<ProductDTO> lists = new ArrayList<ProductDTO>();
-		
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql;
-		
+
 		try {
-			
+
 			sql = "select * from (";
 			sql += "select rownum rnum, data.* from (";
 			sql += "select productNum, productName, productSubject, saveFileName, originalFileName, ";
 			sql += "category, price, quantity from Product where category = ? order by productNum desc";
 			sql += ") data) where rnum >= ? and rnum <= ?";
-			
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, category);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
-			
+
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				
+
+			while (rs.next()) {
+
 				ProductDTO dto = new ProductDTO();
-				
+
 				dto.setProductNum(rs.getInt("productNum"));
 				dto.setProductName(rs.getString("productName"));
 				dto.setProductSubject(rs.getString("productSubject"));
 				dto.setSaveFileName(rs.getString("saveFileName"));
 				dto.setOriginalFileName(rs.getString("originalFileName"));
-				
+
 				dto.setCategory(rs.getString("category"));
 				dto.setPrice(rs.getInt("price"));
 				dto.setQuantity(rs.getInt("quantity"));
-				
+
 				lists.add(dto);
 			}
 			pstmt.close();
 			rs.close();
-			
+
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
+
 		return lists;
 	}
-	
+
 	public int getDataCount(String category) {
 
 		int dataCount = 0;
@@ -158,61 +156,61 @@ public class ProductDAO {
 		return dataCount;
 
 	}
-	
-		//                  
-		public ProductDTO getReadData(int productNum) {
-		
+
+	//
+	public ProductDTO getReadData(int productNum) {
+
 		ProductDTO dto = null;
-		
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql;
-		
+
 		try {
-			
+
 			sql = "select productNum, productName, productSubject, saveFileName, originalFileName, ";
 			sql += "category, price, quantity from Product where productNum = ?";
-			
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, productNum);
-			
+
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				
+
+			while (rs.next()) {
+
 				dto = new ProductDTO();
-				
+
 				dto.setProductNum(rs.getInt("productNum"));
 				dto.setProductName(rs.getString("productName"));
 				dto.setProductSubject(rs.getString("productSubject"));
 				dto.setSaveFileName(rs.getString("saveFileName"));
 				dto.setOriginalFileName(rs.getString("originalFileName"));
-				
+
 				dto.setCategory(rs.getString("category"));
 				dto.setPrice(rs.getInt("price"));
 				dto.setQuantity(rs.getInt("quantity"));
 			}
 			pstmt.close();
 			rs.close();
-			
+
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return dto;
 	}
-	
-		// DB          
-	
+
+	// DB
+
 	public int deleteData(int productNum) {
-		
+
 		int result = 0;
-		
+
 		PreparedStatement pstmt = null;
 		String sql;
-		
+
 		try {
-			
+
 			sql = "delete from Product where productNum = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productNum);
@@ -223,7 +221,7 @@ public class ProductDAO {
 		}
 		return result;
 	}
-	
+
 	public int updateHitCount(int productNum) {
 
 		int result = 0;
@@ -234,7 +232,7 @@ public class ProductDAO {
 
 		try {
 
-			sql= "update product set hitCount=NVL(hitCount, 0)+1 where productNum=?";
+			sql = "update product set hitCount=NVL(hitCount, 0)+1 where productNum=?";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -250,8 +248,7 @@ public class ProductDAO {
 
 		return result;
 	}
-	
-	
+
 	public int searchGetDataCount(String searchKey, String searchValue) {
 
 		int dataCount = 0;
@@ -265,39 +262,31 @@ public class ProductDAO {
 			searchValue = "%" + searchValue + "%";
 
 			sql = "select nvl(count(*),0) from product ";
-			sql+="where " + searchKey + " like ?";
+			sql += "where " + searchKey + " like ?";
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1,searchValue);
+			pstmt.setString(1, searchValue);
 
 			rs = pstmt.executeQuery();
 
-			if(rs.next()) {				
+			if (rs.next()) {
 				dataCount = rs.getInt(1);
 			}
 
-
 			rs.close();
 			pstmt.close();
-
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
-
 
 		return dataCount;
 
-
-
-
-
 	}
 
-	//전체데이터
-	public List<ProductDTO> serchGetLists(int start,int end, String searchKey, String searchValue){
+	// �쟾泥대뜲�씠�꽣
+	public List<ProductDTO> serchGetLists(int start, int end, String searchKey, String searchValue) {
 
 		List<ProductDTO> lists = new ArrayList<ProductDTO>();
 
@@ -309,25 +298,22 @@ public class ProductDAO {
 
 			searchValue = "%" + searchValue + "%";
 
-			sql="select * from (";
-			sql+="select rownum rnum,data.* from (";
-			sql+="select productNum, productName, productSubject, saveFileName, originalFileName,";
-			sql+="category, price, quantity,hitcount from product where " + searchKey + " like ? ";
-			sql+="order by productNum desc) data)";
-			sql+="where rnum>=? and rnum<=?";
+			sql = "select * from (";
+			sql += "select rownum rnum,data.* from (";
+			sql += "select productNum, productName, productSubject, saveFileName, originalFileName,";
+			sql += "category, price, quantity,hitcount from product where " + searchKey + " like ? ";
+			sql += "order by productNum desc) data)";
+			sql += "where rnum>=? and rnum<=?";
 
 			pstmt = conn.prepareStatement(sql);
-
 
 			pstmt.setString(1, searchValue);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 
-
-
 			rs = pstmt.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				ProductDTO dto = new ProductDTO();
 
@@ -344,24 +330,20 @@ public class ProductDAO {
 
 				lists.add(dto);
 
-
 			}
 
 			rs.close();
 			pstmt.close();
 
-
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
 
 		return lists;
 
 	}
-	
-	public List<ProductDTO> highGetLists(int start,int end, String searchKey, String searchValue){
+
+	public List<ProductDTO> highGetLists(int start, int end, String category) {
 
 		List<ProductDTO> lists = new ArrayList<ProductDTO>();
 
@@ -370,28 +352,28 @@ public class ProductDAO {
 		String sql;
 
 		try {
-
-			searchValue = "%" + searchValue + "%";
-
-			sql="select * from (";
-			sql+="select rownum rnum,data.* from (";
-			sql+="select productNum, productName, productSubject, saveFileName, originalFileName,";
-			sql+="category, price, quantity,hitcount from product where " + searchKey + " like ? ";
-			sql+="order by price desc) data)";
-			sql+="where rnum>=? and rnum<=?";
+			
+			 if (category == null) {
+		            System.out.println("Category is null. Cannot fetch products.");
+		            return lists;
+		        }
+			
+			sql = "select * from (";
+			sql += "select rownum rnum,data.* from (";
+			sql += "select productNum, productName, productSubject, saveFileName, originalFileName,";
+			sql += "category, price, quantity,hitcount from product where category = ? ";
+			sql += "order by price desc) data) ";
+			sql += "where rnum>=? and rnum<=?";
 
 			pstmt = conn.prepareStatement(sql);
 
-
-			pstmt.setString(1, searchValue);
+			pstmt.setString(1, category);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 
-
-
 			rs = pstmt.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				ProductDTO dto = new ProductDTO();
 
@@ -408,24 +390,20 @@ public class ProductDAO {
 
 				lists.add(dto);
 
-
 			}
 
 			rs.close();
 			pstmt.close();
 
-
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
 
 		return lists;
 
 	}
-	
-	public List<ProductDTO> lowGetLists(int start,int end, String searchKey, String searchValue){
+
+	public List<ProductDTO> lowGetLists(int start, int end, String category) {
 
 		List<ProductDTO> lists = new ArrayList<ProductDTO>();
 
@@ -435,27 +413,27 @@ public class ProductDAO {
 
 		try {
 
-			searchValue = "%" + searchValue + "%";
-
-			sql="select * from (";
-			sql+="select rownum rnum,data.* from (";
-			sql+="select productNum, productName, productSubject, saveFileName, originalFileName,";
-			sql+="category, price, quantity,hitcount from product where " + searchKey + " like ? ";
-			sql+="order by price asc) data)";
-			sql+="where rnum>=? and rnum<=?";
+			if (category == null) {
+	            System.out.println("Category is null. Cannot fetch products.");
+	            return lists;
+	        }
+			
+			sql = "select * from (";
+			sql += "select rownum rnum,data.* from (";
+			sql += "select productNum, productName, productSubject, saveFileName, originalFileName,";
+			sql += "category, price, quantity,hitcount from product where category = ? ";
+			sql += "order by price asc) data) ";
+			sql += "where rnum>=? and rnum<=?";
 
 			pstmt = conn.prepareStatement(sql);
 
-
-			pstmt.setString(1, searchValue);
+			pstmt.setString(1, category);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 
-
-
 			rs = pstmt.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				ProductDTO dto = new ProductDTO();
 
@@ -472,24 +450,20 @@ public class ProductDAO {
 
 				lists.add(dto);
 
-
 			}
 
 			rs.close();
 			pstmt.close();
 
-
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
 
 		return lists;
 
 	}
-	
-	public List<ProductDTO> hitGetLists(int start,int end, String searchKey, String searchValue){
+
+	public List<ProductDTO> hitGetLists(int start, int end, String category) {
 
 		List<ProductDTO> lists = new ArrayList<ProductDTO>();
 
@@ -499,27 +473,27 @@ public class ProductDAO {
 
 		try {
 
-			searchValue = "%" + searchValue + "%";
-
-			sql="select * from (";
-			sql+="select rownum rnum,data.* from (";
-			sql+="select productNum, productName, productSubject, saveFileName, originalFileName,";
-			sql+="category, price, quantity,hitcount from product where " + searchKey + " like ? ";
-			sql+="order by hitcount desc) data)";
-			sql+="where rnum>=? and rnum<=?";
+	        if (category == null) {
+	            System.out.println("Category is null. Cannot fetch products.");
+	            return lists;
+	        }
+	        
+			sql = "select * from (";
+			sql += "select rownum rnum,data.* from (";
+			sql += "select productNum, productName, productSubject, saveFileName, originalFileName,";
+			sql += "category, price, quantity,hitcount from product where category = ? ";
+			sql += "order by hitcount desc) data)";
+			sql += "where rnum>=? and rnum<=?";
 
 			pstmt = conn.prepareStatement(sql);
 
-
-			pstmt.setString(1, searchValue);
+			pstmt.setString(1, category);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 
-
-
 			rs = pstmt.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				ProductDTO dto = new ProductDTO();
 
@@ -536,18 +510,14 @@ public class ProductDAO {
 
 				lists.add(dto);
 
-
 			}
 
 			rs.close();
 			pstmt.close();
 
-
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
 
 		return lists;
 
