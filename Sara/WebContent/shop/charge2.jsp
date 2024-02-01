@@ -55,9 +55,6 @@
        
     }
     
-    
-    
-    
     input[type="radio"] {
 	margin-bottom: 6px;
 }
@@ -340,13 +337,7 @@ ${dto.total}
 </tr>
 
 
-
-<!-- <table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;"> -->
-<!-- <tr> -->
-<!-- <td colspan="2" bgcolor="#dbdbdb" height="3"></td></tr> -->
-
 </c:forEach>
-
 <!-- </table> -->
 
 <!-- <table  width="630" border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto;"> -->
@@ -359,85 +350,6 @@ ${total}
 </td>
 </tr>
 </table>
-<!-- 
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;">
-<tr>
-<td colspan="2" bgcolor="#dbdbdb" height="3"></td></tr>
-<tr>
-</tr>
-</table> -->
-<%-- 
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;">
-<tr>
-<td>주소</td>
-<td><input type="text" name="addr1"  value="${dto.sample4_roadAddress }" style="width: 300px;"></td>
-</tr>
-<tr>
-<td>연락처1</td>
-<td><input type="text" name="mobile1" value="${dto.mobile1 }"></td>
-</tr>
-</table>
-
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;">
-<tr>
-<td colspan="2" bgcolor="#dbdbdb" height="1"></td></tr>
-<tr>
-</tr>
-</table>
-
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;">
-<tr>
-<td colspan="2" bgcolor="#dbdbdb" height="3"></td></tr>
-<tr>
-</tr>
-</table>
-
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin: auto; width: 550px; height: 30px;">
-<tr>
-<td>
-<input type="checkbox" name="add" />연락처 추가입력
-</td> 
-</tr>
-</table>
-
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;">
-<tr>
-<td colspan="2" bgcolor="#dbdbdb" height="3"></td></tr>
-<tr>
-</tr>
-</table>
-
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;">
-<tr>
-<td>연락처2</td>
-<td><input type="text" name="phon2"></td>
-</tr>
-</table>
-
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#eeeeee" style="margin: auto; width: 550px;">
-<tr>
-<td colspan="2" bgcolor="#dbdbdb" height="3"></td></tr>
-<tr>
-</tr>
-</table>
-
-<br/>
-
-<table  border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin: auto; width: 550px;">
-<tr>
-<td>
-<select name="message" style="width: 350px;">
-<option selected="selected" >배송 시 요청사항 선택하기</option>
-<option value="직접 수령하겠습니다.">직접 수령하겠습니다</option>
-<option value="문앞에 놓아주세요">문앞에 놓아주세요</option>
-<option value="경비실에 맡겨주세요" >경비실에 맡겨주세요</option>
-<option value="배송전 휴대폰으로 연락주세요">배송전 휴대폰으로 연락주세요</option>
-</select>
-</td>
-</tr>
-</table>
-<br/>
- --%>
 
 <table width="1300" border="1" cellpadding="3" cellspacing="3" bordercolor="#000" >
 
@@ -474,7 +386,7 @@ ${total}
         width="100px" height="100px" ><br/><br/><br/>
                 
         <!--  <b>상품 금액 : <input type="text" name=" price" style="font-size:18px; text-align: center; border:none; outline: none;"> {$dto.sum} 원<br/><br/></b>
-        -->    <b>총 금 액 : <input type="text" name=" price" style="font-size:18px; text-align: center; border:none; outline: none;">{$dto.sum} 원<br/><br/></b>
+        -->    <b>총 금 액 : <input type="text" name=" price" style="font-size:18px; text-align: center; border:none; outline: none;">{total} 원<br/><br/></b>
 <!--           <b>배송 요청 사항&nbsp; : &nbsp; &nbsp;<input type="text" name=" price" style="font-size:18px; text-align: center; outline: 1px;"><br/><br/></b> -->
          <b><table  border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin: auto; width: 550px;"></b>
 <tr>
@@ -494,22 +406,12 @@ ${total}
          
         </td>
         
-        
-      
-        
      <td width="147px;" rowspan="7" align="center" style="outline:1px; background-color: #000;">
-     <b onclick="payOrder();" style="color: #fff;">B U Y</b>
-     
-     
+     <b onclick="requestPay();" style="color: #fff;">B U Y</b>
      
 	</td>
 	
-	
-	
 </tr>
-
-
-
 <tr>
     <td style="margin: auto;
     border-left: none; padding-left: 40px;" width="500" height="50">
@@ -536,7 +438,7 @@ ${total}
     <td style="margin: auto;
     border-left: none; padding-left: 40px;" width="500" height="50">   
     	<b>A D D 2 :</b>     
-        <input type="text" id="sample4_detailAddress"  name ="sample4_detailAddress" placeholder ="상세주소" 
+        <input type="text" id="sample4_detailAddress"  name ="sample4_detailAddress"  value="${dto.sample4_detailAddress }" 
         style="border: none; outline: none; background: #fff; color: #000; width: 400px;">
     </td>
 </tr>
@@ -547,7 +449,7 @@ ${total}
     border-left: none; padding-left: 40px;" width="500" height="50" >
         <b>T E L :</b>&nbsp;&nbsp;&nbsp;
         <select style="border: none; outline: none; background: #fff; color: #000; padding-left: 3px;" >
-						<option selected="selected"></option>
+						<option selected="selected">{dto.Mobile1}</option>
 						<option>02</option>
 						<option>031</option>
 						<option>032</option>
@@ -566,10 +468,10 @@ ${total}
 						<option>064</option>
 				</select>
 			&nbsp;&nbsp;
-        <input type="text" name="tel1" onkeypress="onlyNum();" size="4" placeholder="****"
+        <input type="text" name="tel1" onkeypress="onlyNum();" size="4" value="${dto.Mobile2}"
         style="border: none; outline: none; background: #fff; color: #000; text-align: center; ">
         &nbsp;-&nbsp;
-        <input type="text" name="tel2" onkeypress="onlyNum();" size="4" placeholder="****"
+        <input type="text" name="tel2" onkeypress="onlyNum();" size="4" value="${dto.Mobile3}"
         style="border: none; outline: none; background: #fff; color: #000; text-align: center;" >
     </td>
 </tr>
@@ -709,20 +611,9 @@ style=" padding-left: 160px; padding-bottom: 60px;"></a><br/>
  
  </div>
  
-
-
-
-
- 
  
  </div>
  
- 
- 
- 
-
-
-
 <script type="text/javascript">
 
 	IMP.init("imp14397622");	
@@ -787,10 +678,6 @@ console.log('함수 맨 끝 출력');
 
 </td></tr>
 </table>
-
-
-
-
 
 </form>
 
