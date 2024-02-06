@@ -20,10 +20,7 @@
 		function sendIt() {
 			
 			var f = document.myForm;
-			
 			var category = f.category.value;
-			
-			
 			str = f.productName.value;
 			str = str.trim();
 			if(!str) {
@@ -33,7 +30,6 @@
 			}
 			f.productName.value = str;
 			
-			
 			str = f.productSubject.value;
 			str = str.trim();
 			if(!str) {
@@ -42,16 +38,6 @@
 				return;
 			}
 			f.subject.value = str;
-			
-			
-// 			str = f.inputFile.value;
-// 			str = str.trim();
-// 			if(!str) {
-// 				alert("파일을 등록하세요.");
-// 				f.inputFile.focus();
-// 				return;
-// 			}
-// 			f.inputFile.value = str;
 
 			if (category === '종류') {
 			            alert("종류를 선택하세요.");
@@ -65,7 +51,6 @@
 		}
 </script>
 
-
 </head>
 <body>
 	
@@ -73,7 +58,6 @@
 		이미지 게시판 (Servlet)	
 	</div>
 	
-<!-- 	<div id = "imageCreated"> -->
  <form action="<%=cp %>/product/productCreated_ok.do" name = "myForm" method="post" enctype="multipart/form-data">
 
 	<div id="bbsCreated">	
@@ -86,7 +70,6 @@
 				</dd>
 			</dl>
 		</div>
-		
 		
 		<div class="bbsCreated_noLine">
 			<dl>
@@ -122,9 +105,6 @@
 				<option value = "Top">Top</option>
 				</select>
 				</dd>
-<!-- 				<input type="text" name="productSubject" size="35" -->
-<!-- 				maxlength="20" class="boxTF"/> -->
-				
 			</dl>
 		</div>
 		
@@ -154,15 +134,12 @@
 	<div id = "bbsCreated_footer">
 		
 		<input type="submit" value=" 제품등록하기 " name = "upload" class="btn2" />
-<!-- 		onclick="sendIt()"/> --> <!--  sendIt()이랑 같이 썻더니 안됨 -->
 		<input type="reset" value=" 다시입력 " class="btn2"
-		onclick="document.myForm.subject.focus();"/>
+			onclick="document.myForm.subject.focus();"/>
 		<input type="button" value=" 작성취소 " class="btn2"
-		onclick="location='<%=cp %>product/main.do/';"/>
-		
+			onclick="location='<%=cp %>product/main.do/';"/>
 		<input type = "button" value = "파일 리스트" 
-		onclick = "location='<%=cp %>/product/Top.do';" style = "margin-top : 20px;"/>
-		<!--  임시로 Top로만 보냄  -->
+			onclick = "location='<%=cp %>/product/Top.do';" style = "margin-top : 20px;"/>
 	</div>
 	</form>
 </body>
