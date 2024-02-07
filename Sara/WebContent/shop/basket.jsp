@@ -12,8 +12,6 @@
 <title> C A R T </title>
 
 <style>
-
-
         .btn3 {
         border: none;
         outline: none;
@@ -38,7 +36,6 @@
         width: 10; /* 이미지 크기 조절 */
         height: 10;
     }
-    
     
      .cart-button {
         border: none;
@@ -314,7 +311,7 @@ justify-content: space-between; align-items: center;">
 			 
 			 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.5:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
 			 
 			 
 			 <br/>

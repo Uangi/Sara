@@ -11,8 +11,6 @@
 	 String category = request.getParameter("category");
 %>
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,30 +20,24 @@
 <style type="text/css">
 
 textarea {
-	
 	width: 490px;
 	height: 150 px;
 	resize: none;
 	background: #ffffff;
-	
 }
-
-
-
-
 </style>
-
-
 
 <script type="text/javascript">
 
 function incrementQuantity() {
+	
     var quantityInput = document.getElementById("quantity");
     quantityInput.value = parseInt(quantityInput.value) + 1;
     calculateTotal();
   }
   
 function decrementQuantity() {
+	
     var quantityInput = document.getElementById("quantity");
     if (parseInt(quantityInput.value) > 1) {
       quantityInput.value = parseInt(quantityInput.value) - 1;
@@ -64,54 +56,40 @@ function calculateTotal() {
  function sendIt() {
 	 
 	 var f = document.myForm;
-	 
 	 f.action = "<%=cp%>/project/board_ok.do";
 	 f.submit();
-
 }
  
  function basketSendIt() {
 		 
-		 
 		 var f = document.myForm;
-		 
 		 var imagePath = "${imagePath }";
 		 var saveFileName = "${saveFileName }";
 		 var productNum = "${dto.productNum }";
 		 var productName = "${dto.productName }";
 		 var price = "${dto.price }";
-		 
 		 var userId = "<%=userId %>";
 		 
 		 if (userId === "" || userId === null){
-			 
 			 alert("로그인을 진행해주세요")
 			 return;		 
 		 }
-		 
 		 alert("장바구니에 담겼습니닷")
-		
 		 f.action = "<%=cp%>/shoppingcart/basket_ok.do?imagePath=" + imagePath + "&saveFileName=" + saveFileName + 
 				 	"&productNum=" + productNum + "&productName=" + productName + "&price=" + price;
 		 f.submit();
-		  
 	}
  
 function basketView() {
 	
 	var f = document.myForm
-	
-	
 	var userId = "<%=userId %>";
 	 
 	 if (userId === "" || userId === null){
-		 
 		 alert("로그인을 진행해주세요")
 		 return;		 
 	 }
-	 
 	 var imagePath = "${imagePath }";
-	 
 	 f.action = "<%=cp%>/shoppingcart/basket.do";
 	 f.submit();
 	
@@ -120,61 +98,9 @@ function basketView() {
 function reviewSendIt(){
 	
 	var f = document.myForm;
-	
-	
 	f.action="<%=cp%>/detail/board_ok.do";
     f.submit();	
-		
 	}
-
-
-/*
-function addField() {
-    var container = document.getElementById("fieldsContainer");
-
-    // 새로운 텍스트 영역 생성
-    var textarea = document.createElement("textarea");
-    textarea.name = "content"; // 필드 이름 설정
-    textarea.placeholder = "내용을 입력하세요";
-    
-    // 새로운 이미지 업로드 필드 생성
-    var input = document.createElement("input");
-    input.type = "file";
-    input.name = "upload"; // 필드 이름 설정
-    
-    var inputbutton = document.createElement("input");
-    input.type = "button";
-    input.value= "등록"
-    input.name = "upload";
-    
-
-    // 필드를 컨테이너에 추가
-    container.appendChild(textarea);
-    container.appendChild(input);
-    container.appendChild(inputbutton);
-}
-
-<td>
-        <input type="button" value="작성하기" onclick="toggleFields()" style="margin-left: 360px;"/>
-        <div id="fieldsContainer" style="display: none;">
-            <!-- 초기에는 하나의 텍스트 영역과 이미지 업로드 필드가 존재합니다. -->
-            <button type="submit">등록</button>
-            <textarea name="content" placeholder="내용을 입력하세요"></textarea>
-            <input type="file" name="image">
-            
-        </div>
-
-       
-        
-</td>
-
-function toggleFields() {
-    var container = document.getElementById("fieldsContainer");
-    container.style.display = container.style.display === "none" ? "block" : "none";
-    
-}
-*/
-
 </script>
 
 </head>
@@ -355,7 +281,6 @@ ${dto.content }
 </tr>
 </table>
 
-
 <table style="margin: auto;" border="0">
 <tr>
 	<td colspan="4" align="center">
@@ -368,9 +293,7 @@ ${dto.content }
 	</td>
 </tr>
 </table>
-
  
  </form>
-
 </body>
 </html>

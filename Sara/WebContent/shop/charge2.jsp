@@ -180,7 +180,7 @@ function sendIt() {
 
 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.11:8080/Sara/imageSara/사라찐누끼.png" width="300" align="right" style="padding-left: 180px;"></a><br/>
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="300" align="right" style="padding-left: 180px;"></a><br/>
 
 
 
@@ -230,7 +230,7 @@ function sendIt() {
 	
 	   <br/>
 	   
-		<img src="http://192.168.16.11:8080/Sara/imageSara/서치콘누끼.png"
+		<img src="localhost:8081/Sara/imageSara/서치콘누끼.png"
 			width="30px" align="middle" style="margin-bottom: 16px;"/>
 									
 			<select name="searchKey" class="selectField" style="border: none; outline: none;" >
@@ -374,15 +374,15 @@ ${total}
 	
 	<td width="500px;" rowspan="7" align="center" style="align:top; ">
 	<br/>
-       <img src="http://192.168.16.11:8080/Sara/imageSara/56.png"
+       <img src="localhost:8081/Sara/imageSara/56.png"
          width="100px" height="100px">
-         <img src="http://192.168.16.11:8080/Sara/imageSara/next.png"
+         <img src="localhost:8081/Sara/imageSara/next.png"
          width="30px" height="30px" style="padding-bottom: 30px;">
-        <img src="http://192.168.16.11:8080/Sara/imageSara/5656.png" 
+        <img src="localhost:8081/Sara/imageSara/5656.png" 
         width="100px" height="100px" >
-        <img src="http://192.168.16.11:8080/Sara/imageSara/next.png"
+        <img src="localhost:8081/Sara/imageSara/next.png"
          width="30px" height="30px" style="padding-bottom: 30px;">
-        <img src="http://192.168.16.11:8080/Sara/imageSara/12.png" 
+        <img src="localhost:8081/Sara/imageSara/12.png" 
         width="100px" height="100px" ><br/><br/><br/>
                 
         <!--  <b>상품 금액 : <input type="text" name=" price" style="font-size:18px; text-align: center; border:none; outline: none;"> {$dto.sum} 원<br/><br/></b>
@@ -582,7 +582,7 @@ justify-content: space-between; align-items: center;">
 			 
 			 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.11:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
 			 
 			 
 			 <br/>
@@ -603,7 +603,7 @@ justify-content: space-between; align-items: center;">
  <div id="mit2" style="padding-right: 200px; padding-bottom: 50px;" align="right">
  
  <a href="<%=cp %>/aboutUs.jsp">
-<img src="http://192.168.16.11:8080/Sara/imageSara/서명누끼.png" width="250" align="left" 
+<img src="localhost:8081/Sara/imageSara/서명누끼.png" width="250" align="left" 
 style=" padding-left: 160px; padding-bottom: 60px;"></a><br/>
  
  

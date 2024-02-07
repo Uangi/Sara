@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.2:8080/Sara/imageSara/사라찐누끼.png" width="300" align="right" style="padding-left: 50px;"></a><br/>
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="300" align="right" style="padding-left: 50px;"></a><br/>
 
 
 
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	   <td>
 	   <br/>
 	   
-		<img src="http://192.168.16.2:8080/Sara/imageSara/서치콘누끼.png"
+		<img src="localhost:8081/Sara/imageSara/서치콘누끼.png"
 			width="30" align="middle" style="margin-bottom: 16px;"/>
 									
 			<select name="searchKey" class="selectField" style="border: none; outline: none;" >
@@ -340,10 +340,10 @@ bordercolor="#000" style="margin: auto;">
 			</div>	
 			상품명 : ${dto.productName},  상품가격 : ${dto.price}
 					 
-			<img src="http://192.168.16.2:8080/Sara/imageSara/쇼핑백누끼.png"
+			<img src="localhost:8081/Sara/imageSara/쇼핑백누끼.png"
 			 onclick="addToCart('${dto.saveFileName}')" alt="cart" width="15" >
 			  
-            <img src="http://192.168.16.2:8080/Sara/imageSara/저장누끼.png"
+            <img src="localhost:8081/Sara/imageSara/저장누끼.png"
             onclick="addToWishlist('${dto.saveFileName}')" alt="wishlist" width="12"> 
             
             조회수:${dto.hitCount}
@@ -436,7 +436,7 @@ justify-content: space-between; align-items: center;">
 			 
 			 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.2:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
 			 
 			 
 			 <br/>

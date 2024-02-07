@@ -26,16 +26,16 @@
 	
 	<script type="text/javascript">
 		var images = [
-        'http://192.168.16.2:8080/Sara/imageSara/1.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/2.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/3.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/4.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/5.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/6.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/7.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/8.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/9.jpg',
-        'http://192.168.16.2:8080/Sara/imageSara/10.jpg'
+        'localhost:8081/Sara/imageSara/1.jpg',
+        'localhost:8081/Sara/imageSara/2.jpg',
+        'localhost:8081/Sara/imageSara/3.jpg',
+        'localhost:8081/Sara/imageSara/4.jpg',
+        'localhost:8081/Sara/imageSara/5.jpg',
+        'localhost:8081/Sara/imageSara/6.jpg',
+        'localhost:8081/Sara/imageSara/7.jpg',
+        'localhost:8081/Sara/imageSara/8.jpg',
+        'localhost:8081/Sara/imageSara/9.jpg',
+        'localhost:8081/Sara/imageSara/10.jpg'
     ];
 
     var currentIndex = 0;
@@ -64,7 +64,7 @@
 
 
 <div id = "bbsList">
-<img src="http://192.168.16.2:8080/Sara/imageSara/사라찐누끼.png" width="300" >
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="300" >
 </div>
 <br/><br/><br/>
 
@@ -176,7 +176,7 @@ justify-content: space-between; align-items: center;" >
 
 	<div id="bbsmagazine">
 	<img id="slideImage" 
-    src="http://192.168.16.2:8080/Sara/imageSara/1.png"
+    src="localhost:8081/Sara/imageSara/1.png"
     width="480px;" height="650px;" align="right"/>
 	</div>		
 
@@ -192,7 +192,7 @@ justify-content: space-between; align-items: center;">
 			 <br/><br/><br/>
 			 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.2:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 30px;"></a><br/>			 
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 30px;"></a><br/>			 
 <br/>
 <input type="button" 
 	value="&nbsp;&nbsp;4 t h &nbsp;&nbsp;F L O O R &nbsp;,&nbsp; 1 2 4 &nbsp;,&nbsp;

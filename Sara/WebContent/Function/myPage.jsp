@@ -42,13 +42,11 @@
 //         var hiddenUserName = "*".repeat(originalUserName.length);
 //         userNameElement.innerHTML = hiddenUserPwd;
         
-        
 	function confirmDelete(deleteUrl) {
 	    var isDelete = confirm("정말 탈퇴하시겠습니까? 탈퇴 후 회원님에 대한 모든 정보는 삭제됩니다.");
 	
 	    if (isDelete) {
 	        // 사용자가 확인하면 링크로 이동
-	        
 	        window.location.href = deleteUrl;
 	    } else {
 	        // 사용자가 취소하면 아무 동작 없음

@@ -47,16 +47,16 @@
         }
 
         var images = [
-            'http://192.168.16.15:8080/Sara/imageSara/1.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/2.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/3.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/4.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/5.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/6.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/7.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/8.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/9.jpg',
-            'http://192.168.16.15:8080/Sara/imageSara/10.jpg',
+            'localhost:8081/Sara/imageSara/1.jpg',
+            'localhost:8081/Sara/imageSara/2.jpg',
+            'localhost:8081/Sara/imageSara/3.jpg',
+            'localhost:8081/Sara/imageSara/4.jpg',
+            'localhost:8081/Sara/imageSara/5.jpg',
+            'localhost:8081/Sara/imageSara/6.jpg',
+            'localhost:8081/Sara/imageSara/7.jpg',
+            'localhost:8081/Sara/imageSara/8.jpg',
+            'localhost:8081/Sara/imageSara/9.jpg',
+            'localhost:8081/Sara/imageSara/10.jpg',
         ];
 
         var currentIndex = 0;
@@ -117,11 +117,11 @@
 
 
 <div id="bbsList">
-    <img src="http://192.168.16.5:8080/Sara/imageSara/사라찐누끼.png" width="300" /><br/>
+    <img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="300" /><br/>
     
     <div id="bbsList_title">
         <form action="" name="searchForm" method="post">
-            <img src="http://192.168.16.5:8080/Sara/imageSara/서치콘누끼.png" width="40" align="middle" style="margin-bottom: 16px;"/>
+            <img src="localhost:8080/Sara/imageSara/서치콘누끼.png" width="40" align="middle" style="margin-bottom: 16px;"/>
             <select name="searchKey" class="selectField" style="border: none; outline: none;" >
                 <option value="productName">products</option>
                 <option value="price">price</option>
@@ -168,7 +168,7 @@
     </div>
 </form>
     <div id="bbsmagazine">
-        <img id="slideImage" src="http://192.168.16.5:8080/Sara/imageSara/1.jpg" width="480px;" height="650px;" align="right"/>
+        <img id="slideImage" src="localhost:8081/Sara/imageSara/1.jpg" width="480px;" height="650px;" align="right"/>
     </div>
 
 </div>

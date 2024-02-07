@@ -296,7 +296,7 @@ label {
 <div id = "signUp2" style="margin-left: 205px;">
 <div id = "tit">
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.0.10:8081/Sara/imageSara/사라찐누끼.png" width="200px;" ></a><br/><br/>
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="200px;" ></a><br/><br/>
 </div>
 
 <div id = "join1">
@@ -637,7 +637,7 @@ label {
 			 <br/><br/><br/>
 			 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.0.10:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 13px;"></a><br/>			 
 			 
 			 <br/>
 			 

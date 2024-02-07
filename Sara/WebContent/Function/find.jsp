@@ -16,22 +16,19 @@
 <link rel="stylesheet" type="text/css" 	href="<%=cp %>/css/style.css" />
     
     <script type="text/javascript">
-
-	
 	
 	var images = [
-        'http://192.168.16.5:8080/Sara/imageSara/1.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/2.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/3.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/4.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/5.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/6.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/7.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/8.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/9.jpg',
-        'http://192.168.16.5:8080/Sara/imageSara/10.jpg'
+        'localhost:8081/Sara/imageSara/1.jpg',
+        'localhost:8081/Sara/imageSara/2.jpg',
+        'localhost:8081/Sara/imageSara/3.jpg',
+        'localhost:8081/Sara/imageSara/4.jpg',
+        'localhost:8081/Sara/imageSara/5.jpg',
+        'localhost:8081/Sara/imageSara/6.jpg',
+        'localhost:8081/Sara/imageSara/7.jpg',
+        'localhost:8081/Sara/imageSara/8.jpg',
+        'localhost:8081/Sara/imageSara/9.jpg',
+        'localhost:8081/Sara/imageSara/10.jpg'
     ];
-
     var currentIndex = 0;
 
     function startSlideShow() {
@@ -42,26 +39,20 @@
         currentIndex = (currentIndex + 1) % images.length;
         document.getElementById('slideImage').src = images[currentIndex];
     }
-
     // 슬라이드 쇼 시작
     startSlideShow();
-
-	
 	
 </script>
-    
-    
     
 </head>
 <body>
 
 
 <div id = "bbsList">
-<img src="http://192.168.16.5:8080/Sara/imageSara/사라찐누끼.png" width="300"
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="300"
 onclick="location='<%=cp%>/product/shop.do';"  >
 </div>
 <br/><br/><br/>
-
 
 <div id="bbsshop" align="center">
 
@@ -99,7 +90,6 @@ onclick="location='<%=cp%>/product/shop.do';"  >
 	border:2px solid #000;
 	text-align:center;
 	align-content:right;" required />
-	
 	
 </div>
 
@@ -163,10 +153,7 @@ onclick="location='<%=cp%>/product/shop.do';"  >
     %>
 </div>
 
-
 <div id = "butt">
-
-
 
 <table>
 
@@ -198,10 +185,8 @@ onclick="location='<%=cp%>/product/shop.do';"  >
 </table>
 </div>
 
-
 </div>	
 
-	
 </div>
 
 <div id="mit" style="display: flex;
@@ -212,7 +197,7 @@ justify-content: space-between; align-items: center;">
 			 <br/><br/><br/>
 			 
 <a href="<%=cp %>/main.jsp">
-<img src="http://192.168.16.5:8080/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 40px;"></a><br/>			 
+<img src="localhost:8081/Sara/imageSara/사라찐누끼.png" width="50" align="left" style="padding-left: 40px;"></a><br/>			 
 			 
 			 
 			 <br/>
@@ -225,7 +210,6 @@ justify-content: space-between; align-items: center;">
 			onclick="location='<%=cp%>/product/shop.do';" 
 			 align="middle" style="text-align: left; border: none; outline: none; padding-left: 30px; background: transparent;" /><br/>
 
- 
  </div>
  
  
