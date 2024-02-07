@@ -18,7 +18,6 @@ public class FileManager {
 
 			// 한글 파일 디코딩
 			originalFileName = new String(originalFileName.getBytes("euc-kr"), "ISO-8859-1");
-
 			File f = new File(filePath);
 
 			if (!f.exists()) {
@@ -34,7 +33,6 @@ public class FileManager {
 			// attachment - 파일을 다운로드하도록 지정, originalFileName - 원본 파일 이름
 			
 			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f));
-
 			OutputStream out = response.getOutputStream();
 
 			int data;
@@ -43,18 +41,14 @@ public class FileManager {
 			while ((data = bis.read(buffer, 0, 4096)) != -1) {
 				out.write(buffer, 0, data);
 			}
-
 			out.flush();
 			out.close();
 			bis.close();
-
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			return false;
 		}
-
 		return true;
-
 	}
 
 	public static void doFileDelete(String fileName, String path) {
@@ -62,7 +56,6 @@ public class FileManager {
 		try {
 			// 파일 위치 + 이름
 			String filePath = path + File.separator + fileName;
-
 			File f = new File(filePath);
 
 			if (f.exists()) {
@@ -73,7 +66,5 @@ public class FileManager {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
 	}
-
 }

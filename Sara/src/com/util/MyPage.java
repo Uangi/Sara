@@ -18,7 +18,6 @@ public class MyPage {
 		return pageCount;
 	}
 	
-	
 	// 페이징 처리 메소드
 	public String pageIndexList(int currentPage, int totalPage, String listUrl) {
 		int numPerBlock = 5; // 1◀이전 6 7 8 9 10 다음▶12 6~10까지 표시되는 페이지의 갯수
@@ -39,7 +38,6 @@ public class MyPage {
 		
 		 // current_page가 9
 		 currentPageSetup = (currentPage / numPerBlock) * numPerBlock; //(9/5)*5=5
-		
 		
 		 //만약 currentPage가 5,10,15,20…이면
 		 //currentPageSetup=(currentPage / numPerBlock) * numPerBlock; //(10/5)*5=10
@@ -62,10 +60,8 @@ public class MyPage {
 		 while(page <= totalPage && page <= (currentPageSetup + numPerBlock)){
 			 
 		 if(page == currentPage){
-			 
 		 sb.append("<font color=\"Fuchsia\">" + page + "</font>&nbsp;");
-		 
-		 	} else {
+		 } else {
 		 sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "</a>&nbsp;");
 		 }		// 예 ) <a href = "list.jsp?pageNum = 2">2</a>&nbsp; 
 		 
@@ -75,11 +71,8 @@ public class MyPage {
 		 //다음▶,마지막페이지
 		 //if(12 - 5 > 5)
 		 if(totalPage - currentPageSetup > numPerBlock){
-		
 		 sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">다음▶</a>&nbsp;");
-		
 		 }
-		
 		 	return sb.toString();
 		}
 		

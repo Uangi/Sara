@@ -24,16 +24,13 @@ public class ReviewServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		process(req, resp);
-		
 	}
 	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		process(req, resp);
-		
 	}
 	
 	protected void forward(HttpServletRequest req, HttpServletResponse resp, String url) throws ServletException, IOException {
@@ -41,51 +38,31 @@ public class ReviewServlet extends HttpServlet {
 		rd.forward(req, resp);
 	}
 	
-	
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		
 		req.setCharacterEncoding("UTF-8");
-
 		Connection conn = DBConn.getConnection();
-
 		ReviewDAO dao = new ReviewDAO(conn);
-		
 		ProductDAO dao2 = new ProductDAO(conn);
-		
 		MyPage myPage = new MyPage();
-		
-		
-
 		String cp = req.getContextPath();
-
 		String uri = req.getRequestURI();
 		String url;
-
-		//                               
 		String root = getServletContext().getRealPath("/");
 		String path = root + "ProductImage" + File.separator + "saveFile";
 		
 	if (uri.indexOf("board.do")!=-1) {
 		
-		
 		int productNum = Integer.parseInt(req.getParameter("productNum"));
 		String saveFileName = req.getParameter("saveFileName");
 		String imagePath = req.getParameter("imagePath");
 		String pageNum = req.getParameter("pageNum");
-		
-		
 		dao2.updateHitCount(productNum);
-		
-
 		int currentPage = 1;
-
 		int dataCount = dao.reviewGetDataCount(productNum);
 
 		if(pageNum!=null) {
-
 			currentPage = Integer.parseInt(pageNum);
-
 		}
 
 		int numPerPage = 5;
@@ -97,16 +74,11 @@ public class ReviewServlet extends HttpServlet {
 
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
-		
 		List<ReviewDTO> lists = dao.reviewGetList(start, end , productNum);
-
 		String param = "";
-		
-		
 		 param = "productNum=" + productNum;
 		 param +="&saveFileName=" + saveFileName;
 		 param +="&imagePath=" + imagePath;
-           
          String urlList = cp + "/detail/board.do";
          
          if(!param.equals("")) {
@@ -114,9 +86,9 @@ public class ReviewServlet extends HttpServlet {
          }
          
          String pageIndexList = myPage.pageIndexList(currentPage, totalPage, urlList);
-		
-		String deletePath = cp + "/detail/delete.do";
-
+		 String deletePath = cp + "/detail/delete.do";
+		 ProductDTO dto = dao2.getReadData(productNum);
+		 int average = dao.revAverage(productNum);
 
 		req.setAttribute("deletePath", deletePath);
 		req.setAttribute("lists", lists);
@@ -125,29 +97,19 @@ public class ReviewServlet extends HttpServlet {
 		req.setAttribute("pageNum", currentPage);
 		req.setAttribute("totalPage", totalPage);
 	
-		
-		ProductDTO dto = dao2.getReadData(productNum);
-		int average = dao.revAverage(productNum);
-		
 		req.setAttribute("dto", dto);
 		req.setAttribute("average", average);
 		req.setAttribute("imagePath", imagePath);
 		req.setAttribute("saveFileName", saveFileName);
-		
 		url = "/shop/board.jsp";
 		forward(req, resp, url);
-		
 				
-	}else if(uri.indexOf("board_ok.do")!=-1) {
+	}	else if(uri.indexOf("board_ok.do")!=-1) {
 		
 		String saveFileName = req.getParameter("saveFileName");
 		String imagePath = req.getParameter("imagePath");
-			
-		
 		HttpSession session = req.getSession();
-		
 		SignUpDTO loggedInUser = (SignUpDTO)session.getAttribute("loggedInUser");
-
 		ReviewDTO dto = new ReviewDTO();
 	
 		dto.setUserId(loggedInUser.getUserId());	
@@ -155,24 +117,13 @@ public class ReviewServlet extends HttpServlet {
 		dto.setProductNum(Integer.parseInt(req.getParameter("productNum")));
 		dto.setContent(req.getParameter("content"));
 		dto.setRev(Integer.parseInt(req.getParameter("rev")));
-		
 		String productNum  = String.valueOf(Integer.parseInt(req.getParameter("productNum")));
-		
-	
 		dao.reviewInsertData(dto);
-		
-		
 		req.setAttribute("productNum", productNum );
 		req.setAttribute("imagePath", imagePath);
 		req.setAttribute("saveFileName", saveFileName);	
-		
-		
-		
-
 		url = cp + "/detail/board.do?productNum="+productNum+"&imagePath="+imagePath+"&saveFileName="+saveFileName;
-
 		resp.sendRedirect(url);	
-
 		}
 	}
 }

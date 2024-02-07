@@ -36,43 +36,37 @@ public class SignUpServlet extends HttpServlet {
 		rd.forward(req, resp);
 	}
 	
-	
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		req.setCharacterEncoding("UTF-8");
-
 		String cp = req.getContextPath();
 		Connection conn = DBConn.getConnection();
 		SignUpDAO dao = new SignUpDAO(conn);
 		String uri = req.getRequestURI();
 		String url;
 		
-		
 		if(uri.indexOf("userCreated.do")!=-1) {
 			url="/Function/userCreated.jsp";
 			forward(req, resp, url);
 			
-		}else if(uri.indexOf("userCreated.do")!=-1){
+		}	else if(uri.indexOf("userCreated.do")!=-1){
 		
 			SignUpDTO dto = new SignUpDTO();
 
 			dto.setUserId(req.getParameter("userId"));
 			dto.setUserPwd(req.getParameter("userPwd"));
 			dto.setUserName(req.getParameter("userName"));
-			
 			dto.setTel1(req.getParameter("tel1"));
 			dto.setTel2(req.getParameter("tel2"));
 			dto.setTel3(req.getParameter("tel3"));
 			dto.setMobile1(req.getParameter("mobile1"));
 			dto.setMobile2(req.getParameter("mobile2"));
 			dto.setMobile3(req.getParameter("mobile3"));
-			
 			dto.setSample4_postcode(req.getParameter("sample4_postcode"));
 			dto.setSample4_roadAddress(req.getParameter("sample4_roadAddress"));
 			dto.setSample4_jibunAddress(req.getParameter("sample4_jibunAddress"));
 			dto.setSample4_detailAddress(req.getParameter("sample4_detailAddress"));
 			dto.setSample4_extraAddress(req.getParameter("sample4_extraAddress"));
-			
 			dto.setEmail(req.getParameter("email"));
 			dto.setGender(req.getParameter("gender"));
 			dto.setBirth(req.getParameter("birth"));
@@ -82,7 +76,6 @@ public class SignUpServlet extends HttpServlet {
 			dao.insertData(dto);
 
 			url = cp + "/shop.jsp";
-
 			resp.sendRedirect(url);	
 		
 		} else if(uri.indexOf("idcheked_ok.do")!=-1){
@@ -108,7 +101,6 @@ public class SignUpServlet extends HttpServlet {
 			        url = "/Function/userCreated.jsp";
 			        forward(req, resp, url);
 			        return;
-			   	    
 			    }
 			    SignUpDTO dto = dao.getReadData(userId);
 
@@ -122,22 +114,18 @@ public class SignUpServlet extends HttpServlet {
 			    req.setAttribute("message", "사용 가능한 아이디입니다.");
 			    id = userId;
 			    req.setAttribute("userId", id);
-			
 			    url="/Function/userCreated.jsp";
-
 			    forward(req, resp, url);
-		
 			    
-		}else if(uri.indexOf("login.do")!=-1){
+		}	else if(uri.indexOf("login.do")!=-1){
 			
 			url="/Function/login.jsp";
 			forward(req, resp, url);
 		
-	}else if(uri.indexOf("login_ok.do")!=-1) {
+	}	else if(uri.indexOf("login_ok.do")!=-1) {
 		
 		String userId = req.getParameter("userId");
 		String userPwd = req.getParameter("userPwd");
-		
 		SignUpDTO dto = dao.getReadData(userId);
 		
 		if(dto==null||(!dto.getUserPwd().equals(userPwd))) {
@@ -145,34 +133,28 @@ public class SignUpServlet extends HttpServlet {
 			req.setAttribute("message", "회원정보가 존재하지 않습니다.");				
 			url = "/Function/login.jsp";
 			forward(req, resp, url);	
-			
 		}
 		
 		HttpSession session = req.getSession();
-		
-//		CustomInfo info = new CustomInfo();
 		 SignUpDTO loggedInUser = (SignUpDTO)session.getAttribute("loggedInUser");
 		 loggedInUser.setUserId(dto.getUserId());         
 		 loggedInUser.setUserName(dto.getUserName());                
-		
 		session.setAttribute("loggedInUser", loggedInUser);
-		
 		session.setMaxInactiveInterval(-1);
 		url = cp;
 		resp.sendRedirect(url);	
 		
-		
-	}else if(uri.indexOf("logout.do")!=-1) {
+		// 로그아웃
+	}	else if(uri.indexOf("logout.do")!=-1) {
 		
 		HttpSession session = req.getSession();
 		session.removeAttribute("loggedInUser");
 		session.invalidate();
-		
 		url = cp+ "/product/shop.do";
 		resp.sendRedirect(url);	
 			
-		
-	}else if(uri.indexOf("userUpdate.do")!=-1) {
+		// 회원정보 수정
+	}	else if(uri.indexOf("userUpdate.do")!=-1) {
 		
 		HttpSession session = req.getSession();
 //		CustomInfo info = (CustomInfo)session.getAttribute("customInfo");
@@ -186,11 +168,9 @@ public class SignUpServlet extends HttpServlet {
 	} else if(uri.indexOf("userUpdate_ok.do")!=-1) {
 		
 		HttpSession session = req.getSession();	// request에 대한 세션 객체를 가져오거나, 새로운 세션 객체 생성
-//		CustomInfo info = (CustomInfo)session.getAttribute("customInfo");	//
+		
+		// 세션 생성
 		SignUpDTO loggedInUser = (SignUpDTO)session.getAttribute("loggedInUser");
-		
-		// 사용자 로그인 정보를 가진 
-		
 		String userId = loggedInUser.getUserId();
 		SignUpDTO dto = dao.getReadData(userId);	
 		
@@ -215,21 +195,16 @@ public class SignUpServlet extends HttpServlet {
 		url = cp;
 		resp.sendRedirect(url);
 		
-		// 삭제완료
+		// 회원탈퇴
 	} else if (uri.indexOf("userWithDrawal.do") != -1) {
 		String userId = req.getParameter("userId");
-
 		dao.deleteData(userId);
-
 		HttpSession session = req.getSession();	// 회원탈퇴 후 세션 삭제
 		session.removeAttribute("loggedInUser");
 		session.invalidate();
-		
 		url = cp + "/product/shop.do";	// 회원탈퇴하면 굿바이하면서 만든 주소로 보내기
 		resp.sendRedirect(url);
-
 	}
-		
 }
 	
 	private boolean containsSpecialCharacter(String userId) {
@@ -237,6 +212,4 @@ public class SignUpServlet extends HttpServlet {
 	    String specialCharacters = "[!@#$%^&*(),.?\":{}|<>]";
 	    return userId.matches(".*" + specialCharacters + ".*");
 	}
-
-
 }
