@@ -27,10 +27,6 @@
         <th>개발도구</th>
         <td colspan="3">Eclipse IDE</td>
     </tr>
-    <tr>
-        <th>DB</th>
-        <td colspan="3">MySQL (8.3.0)</td>
-    </tr>
      <tr>
         <th>DB</th>
         <td colspan="3">Oracle</td>
